@@ -1,0 +1,119 @@
+<!-- src/app/components/navbar/navbar.component.html -->
+
+<nav class="navbar" [class.scrolled]="isScrolled">
+  <div class="nav-container">
+
+    <!-- ─── Logo ─────────────────────────────────────────────────────────── -->
+    <a routerLink="/" class="nav-logo" (click)="closeMenu()">
+      <span class="logo-icon">🛍️</span>
+      <span class="logo-text">Shop<span class="logo-accent">Now</span></span>
+    </a>
+
+    <!-- ─── Liens de navigation (desktop) ────────────────────────────────── -->
+    <ul class="nav-links" [class.open]="isMenuOpen">
+
+      <li>
+        <a routerLink="/"
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{exact: true}"
+           (click)="closeMenu()">
+          Accueil
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="/products"
+           routerLinkActive="active"
+           (click)="closeMenu()">
+          Produits
+        </a>
+      </li>
+
+      <!-- Liens visibles uniquement sur mobile -->
+      <li class="mobile-only">
+        <a routerLink="/cart"
+           routerLinkActive="active"
+           (click)="closeMenu()">
+          Panier
+          <span class="badge-mobile" *ngIf="cartCount > 0">
+            {{ cartCount }}
+          </span>
+        </a>
+      </li>
+
+      <!-- Si connecté → afficher nom + déconnexion -->
+      <ng-container *ngIf="currentUser; else guestLinks">
+        <li class="mobile-only">
+          <span class="user-greeting-mobile">
+            👋 {{ currentUser.firstName }}
+          </span>
+        </li>
+        <li class="mobile-only">
+          <a (click)="logout()" class="logout-link">
+            Déconnexion
+          </a>
+        </li>
+      </ng-container>
+
+      <!-- Si non connecté → Login / Register -->
+      <ng-template #guestLinks>
+        <li class="mobile-only">
+          <a routerLink="/login"
+             routerLinkActive="active"
+             (click)="closeMenu()">
+            Connexion
+          </a>
+        </li>
+        <li class="mobile-only">
+          <a routerLink="/register"
+             routerLinkActive="active"
+             (click)="closeMenu()">
+            Inscription
+          </a>
+        </li>
+      </ng-template>
+
+    </ul>
+
+    <!-- ─── Actions (desktop) ─────────────────────────────────────────────── -->
+    <div class="nav-actions">
+
+      <!-- Bouton panier avec badge -->
+      <a routerLink="/cart" class="cart-btn">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-badge" *ngIf="cartCount > 0">
+          {{ cartCount }}
+        </span>
+      </a>
+
+      <!-- Si connecté -->
+      <ng-container *ngIf="currentUser; else authButtons">
+        <div class="user-menu">
+          <span class="user-name">👋 {{ currentUser.firstName }}</span>
+          <button class="logout-btn" (click)="logout()">
+            Déconnexion
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- Si non connecté -->
+      <ng-template #authButtons>
+        <a routerLink="/login" class="btn-login">Connexion</a>
+        <a routerLink="/register" class="btn-register">Inscription</a>
+      </ng-template>
+
+    </div>
+
+    <!-- ─── Bouton hamburger (mobile) ─────────────────────────────────────── -->
+    <button class="hamburger" (click)="toggleMenu()"
+            [class.active]="isMenuOpen">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+</nav>
+
+<!-- Overlay pour fermer le menu mobile -->
+<div class="overlay" *ngIf="isMenuOpen" (click)="closeMenu()"></div>

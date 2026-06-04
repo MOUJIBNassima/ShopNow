@@ -1,0 +1,300 @@
+/* src/app/components/navbar/navbar.css */
+
+/* ─── Base Navbar ─────────────────────────────────────────────────────────── */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(108, 99, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+  box-shadow: 0 4px 30px rgba(108, 99, 255, 0.15);
+  background: rgba(255, 255, 255, 0.98);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+/* ─── Logo ────────────────────────────────────────────────────────────────── */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  flex-shrink: 0;
+}
+
+.logo-icon { font-size: 1.6rem; }
+
+.logo-accent { color: #6C63FF; }
+
+/* ─── Liens navigation ────────────────────────────────────────────────────── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #4a4a6a;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.nav-links a:hover {
+  color: #6C63FF;
+  background: rgba(108, 99, 255, 0.08);
+}
+
+.nav-links a.active {
+  color: #6C63FF;
+  background: rgba(108, 99, 255, 0.1);
+  font-weight: 600;
+}
+
+/* ─── Actions (panier + auth) ─────────────────────────────────────────────── */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+/* Bouton panier */
+.cart-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(108, 99, 255, 0.08);
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+}
+
+.cart-btn:hover {
+  background: rgba(108, 99, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Badge nombre d'articles */
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: linear-gradient(135deg, #6C63FF, #A855F7);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+  0%   { transform: scale(0); }
+  70%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Boutons Login / Register */
+.btn-login {
+  text-decoration: none;
+  color: #6C63FF;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 10px;
+  border: 2px solid rgba(108, 99, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-login:hover {
+  border-color: #6C63FF;
+  background: rgba(108, 99, 255, 0.05);
+}
+
+.btn-register {
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6C63FF, #A855F7);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+}
+
+.btn-register:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
+}
+
+/* User menu connecté */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #4a4a6a;
+  font-size: 0.9rem;
+}
+
+.logout-btn {
+  background: none;
+  border: 2px solid #ff6b6b;
+  color: #ff6b6b;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #ff6b6b;
+  color: white;
+}
+
+/* ─── Hamburger (mobile) ──────────────────────────────────────────────────── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.hamburger:hover {
+  background: rgba(108, 99, 255, 0.08);
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #4a4a6a;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ─── Overlay mobile ──────────────────────────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+/* ─── Mobile only links ───────────────────────────────────────────────────── */
+.mobile-only { display: none; }
+
+.badge-mobile {
+  background: linear-gradient(135deg, #6C63FF, #A855F7);
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 6px;
+}
+
+.user-greeting-mobile {
+  color: #6C63FF;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  display: block;
+}
+
+.logout-link {
+  color: #ff6b6b !important;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+
+  .nav-actions {
+    display: none;
+  }
+
+  .mobile-only { display: list-item; }
+
+  .nav-links {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: white;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+    gap: 0.3rem;
+    z-index: 1000;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    transform: translateY(-110%);
+    transition: transform 0.3s ease;
+  }
+
+  .nav-links.open {
+    transform: translateY(0);
+  }
+
+  .nav-links a {
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    font-size: 1rem;
+  }
+}

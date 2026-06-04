@@ -1,0 +1,172 @@
+<!-- src/app/pages/products/products.html -->
+
+<div class="products-page">
+
+  <!-- ─── Header de la page ──────────────────────────────────────────────── -->
+  <div class="page-hero">
+    <div class="container">
+      <h1>Nos <span class="gradient-text">Produits</span></h1>
+      <p>Découvrez notre sélection de produits premium</p>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- ─── Barre de recherche ───────────────────────────────────────────── -->
+    <div class="search-bar-wrapper">
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          placeholder="Rechercher un produit..."
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearch()"
+          class="search-input"
+        />
+        <!-- Bouton effacer recherche -->
+        <button class="clear-btn"
+                *ngIf="searchQuery"
+                (click)="searchQuery=''; onSearch()">
+          ✕
+        </button>
+      </div>
+
+      <!-- Tri -->
+      <div class="sort-wrapper">
+        <select [(ngModel)]="selectedSort"
+                (ngModelChange)="onSortChange()"
+                class="sort-select">
+          <option value="default">Trier par...</option>
+          <option value="price-asc">Prix croissant</option>
+          <option value="price-desc">Prix décroissant</option>
+          <option value="rating">Mieux notés</option>
+          <option value="name">Nom A-Z</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ─── Filtres catégories ───────────────────────────────────────────── -->
+    <div class="categories-filter">
+      <button
+        *ngFor="let cat of categories"
+        class="filter-btn"
+        [class.active]="selectedCategory === cat"
+        (click)="onCategoryChange(cat)">
+        {{ cat }}
+      </button>
+    </div>
+
+    <!-- ─── Résultats info ───────────────────────────────────────────────── -->
+    <div class="results-info">
+      <span class="results-count">
+        <strong>{{ filteredProducts.length }}</strong> produit(s) trouvé(s)
+      </span>
+      <button class="reset-btn"
+              *ngIf="searchQuery || selectedCategory !== 'Tous'"
+              (click)="resetFilters()">
+        ↺ Réinitialiser les filtres
+      </button>
+    </div>
+
+    <!-- ─── Loading ──────────────────────────────────────────────────────── -->
+    <div class="loading-wrapper" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <p>Chargement des produits...</p>
+    </div>
+
+    <!-- ─── Grille produits ──────────────────────────────────────────────── -->
+    <div class="products-grid" *ngIf="!isLoading">
+
+      <!-- Carte produit -->
+      <div class="product-card"
+           *ngFor="let product of filteredProducts">
+
+        <!-- Badge -->
+        <div class="product-badge" *ngIf="product.badge">
+          {{ product.badge }}
+        </div>
+
+        <!-- Stock faible -->
+        <div class="low-stock" *ngIf="product.stock <= 5">
+          🔥 Plus que {{ product.stock }} en stock !
+        </div>
+
+        <!-- Image -->
+        <div class="product-image-wrapper">
+          <img [src]="product.image"
+               [alt]="product.name"
+               class="product-image" />
+          <div class="product-overlay">
+            <a [routerLink]="['/products', product.id]"
+               class="overlay-btn">
+              👁️ Voir le détail
+            </a>
+          </div>
+        </div>
+
+        <!-- Infos -->
+        <div class="product-info">
+          <span class="product-category">{{ product.category }}</span>
+          <h3 class="product-name">{{ product.name }}</h3>
+
+          <!-- Rating -->
+          <div class="product-rating">
+            <span class="stars">
+              <span *ngFor="let s of getStars(product.rating)">⭐</span>
+            </span>
+            <span class="rating-value">{{ product.rating }}</span>
+            <span class="reviews">({{ product.reviews }})</span>
+          </div>
+
+          <!-- Description courte -->
+          <p class="product-desc">{{ product.description }}</p>
+
+          <!-- Prix -->
+          <div class="product-price">
+            <span class="price-current">{{ product.price }}€</span>
+            <span class="price-old" *ngIf="product.oldPrice">
+              {{ product.oldPrice }}€
+            </span>
+            <span class="price-discount" *ngIf="product.oldPrice">
+              -{{ getDiscount(product.price, product.oldPrice!) }}%
+            </span>
+          </div>
+
+          <!-- Actions -->
+          <div class="product-actions">
+            <button
+              class="add-to-cart-btn"
+              (click)="addToCart(product)"
+              [class.added]="addedProductId === product.id">
+              <span *ngIf="addedProductId !== product.id">
+                🛒 Ajouter
+              </span>
+              <span *ngIf="addedProductId === product.id">
+                ✅ Ajouté !
+              </span>
+            </button>
+
+            <a [routerLink]="['/products', product.id]"
+               class="detail-btn">
+              →
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─── Aucun résultat ────────────────────────────────────────────────── -->
+    <div class="empty-state"
+         *ngIf="!isLoading && filteredProducts.length === 0">
+      <span class="empty-icon">🔍</span>
+      <h3>Aucun produit trouvé</h3>
+      <p>Essayez avec d'autres mots-clés ou réinitialisez les filtres</p>
+      <button class="btn-primary" (click)="resetFilters()">
+        Voir tous les produits
+      </button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,152 @@
+<!-- src/app/pages/cart/cart.html -->
+
+<div class="cart-page">
+  <div class="container">
+
+    <!-- ─── Header ────────────────────────────────────────────────────── -->
+    <div class="cart-header">
+      <h1>Mon <span class="gradient-text">Panier</span></h1>
+      <span class="item-count" *ngIf="cartItems.length > 0">
+        {{ getItemCount() }} article(s)
+      </span>
+    </div>
+
+    <!-- ─── Panier vide ────────────────────────────────────────────────── -->
+    <div class="empty-cart" *ngIf="cartItems.length === 0">
+      <span class="empty-icon">🛒</span>
+      <h2>Votre panier est vide</h2>
+      <p>Découvrez nos produits et commencez votre shopping !</p>
+      <a routerLink="/products" class="btn-primary">
+        🛍️ Voir les produits
+      </a>
+    </div>
+
+    <!-- ─── Contenu panier ─────────────────────────────────────────────── -->
+    <div class="cart-content" *ngIf="cartItems.length > 0">
+
+      <!-- Colonne gauche : articles -->
+      <div class="cart-items-section">
+
+        <!-- Barre progression livraison gratuite -->
+        <div class="free-shipping-bar">
+          <div class="shipping-text">
+            <span *ngIf="getRemainingForFreeShipping() > 0">
+              🚚 Plus que
+              <strong>{{ getRemainingForFreeShipping().toFixed(2) }}€</strong>
+              pour la livraison gratuite !
+            </span>
+            <span *ngIf="getRemainingForFreeShipping() === 0"
+                  class="free-shipping-achieved">
+              🎉 Vous bénéficiez de la livraison gratuite !
+            </span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill"
+                 [style.width.%]="getShippingProgress()">
+            </div>
+          </div>
+        </div>
+
+        <!-- Liste des articles -->
+        <div class="cart-item" *ngFor="let item of cartItems">
+
+          <!-- Image -->
+          <div class="item-image-wrapper">
+            <img [src]="item.product.image"
+                 [alt]="item.product.name"
+                 class="item-image" />
+          </div>
+
+          <!-- Infos article -->
+          <div class="item-details">
+            <span class="item-category">
+              {{ item.product.category }}
+            </span>
+            <h3 class="item-name">{{ item.product.name }}</h3>
+            <span class="item-unit-price">
+              Prix unitaire : {{ item.product.price }}€
+            </span>
+          </div>
+
+          <!-- Quantité -->
+          <div class="item-quantity">
+            <button class="qty-btn"
+                    (click)="decrease(item.product.id, item.quantity)"
+                    [disabled]="item.quantity <= 1">
+              −
+            </button>
+            <span class="qty-value">{{ item.quantity }}</span>
+            <button class="qty-btn"
+                    (click)="increase(item.product.id, item.quantity)">
+              +
+            </button>
+          </div>
+
+          <!-- Prix total ligne -->
+          <div class="item-total">
+            {{ (item.product.price * item.quantity).toFixed(2) }}€
+          </div>
+
+          <!-- Supprimer -->
+          <button class="remove-btn"
+                  (click)="remove(item.product.id)"
+                  title="Supprimer">
+            🗑️
+          </button>
+
+        </div>
+
+        <!-- Actions bas de liste -->
+        <div class="cart-actions">
+          <a routerLink="/products" class="btn-continue">
+            ← Continuer mes achats
+          </a>
+          <button class="btn-clear" (click)="clearCart()">
+            🗑️ Vider le panier
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Colonne droite : résumé commande -->
+      <div class="order-summary">
+        <h2>Résumé de la commande</h2>
+
+        <div class="summary-lines">
+          <div class="summary-line">
+            <span>Sous-total</span>
+            <span>{{ getSubtotal().toFixed(2) }}€</span>
+          </div>
+          <div class="summary-line">
+            <span>Livraison</span>
+            <span *ngIf="getShipping() > 0">
+              {{ getShipping().toFixed(2) }}€
+            </span>
+            <span *ngIf="getShipping() === 0" class="free-label">
+              Gratuite 🎉
+            </span>
+          </div>
+          <div class="summary-line summary-total">
+            <span>Total</span>
+            <span>{{ getTotal().toFixed(2) }}€</span>
+          </div>
+        </div>
+
+        <!-- Bouton commander -->
+        <a routerLink="/checkout" class="btn-checkout">
+          Passer la commande →
+        </a>
+
+        <!-- Paiements acceptés -->
+        <div class="payment-icons">
+          <span>💳</span>
+          <span>🏦</span>
+          <span>📱</span>
+          <span class="payment-text">Paiement 100% sécurisé</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
