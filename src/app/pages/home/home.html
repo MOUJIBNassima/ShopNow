@@ -7,7 +7,7 @@
   <div class="hero-container">
 
     <div class="hero-content">
-      <span class="hero-badge">🔥 Nouveautés 2025</span>
+      <span class="hero-badge">🔥 Nouveautés 2026</span>
       <h1 class="hero-title">
         Découvrez le
         <span class="gradient-text">Shopping</span>
@@ -50,16 +50,15 @@
       <div class="hero-blob"></div>
       <div class="hero-image-wrapper">
         <img
-          src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=600&fit=crop"
+          src="image.png"
           alt="Shopping ShopNow"
           class="hero-image"
         />
-        <!-- Floating cards -->
         <div class="float-card float-card-1">
           <span>🚚</span>
           <div>
             <strong>Livraison gratuite</strong>
-            <small>Dès 50€ d'achat</small>
+            <small>Dès 500DH d'achat</small>
           </div>
         </div>
         <div class="float-card float-card-2">
@@ -80,44 +79,35 @@
 <!-- ═══════════════════════════════════════════════════════════════════════ -->
 <section class="categories-section">
   <div class="container">
-
     <div class="section-header">
       <h2>Nos <span class="gradient-text">Catégories</span></h2>
       <p>Trouvez exactement ce que vous cherchez</p>
     </div>
-
     <div class="categories-grid">
-
       <a routerLink="/products" class="category-card" style="--cat-color: #6C63FF">
         <span class="cat-icon">📱</span>
         <span class="cat-name">Électronique</span>
       </a>
-
       <a routerLink="/products" class="category-card" style="--cat-color: #A855F7">
         <span class="cat-icon">🎧</span>
         <span class="cat-name">Audio</span>
       </a>
-
       <a routerLink="/products" class="category-card" style="--cat-color: #8B5CF6">
         <span class="cat-icon">👟</span>
         <span class="cat-name">Sport</span>
       </a>
-
       <a routerLink="/products" class="category-card" style="--cat-color: #C084FC">
         <span class="cat-icon">🎮</span>
         <span class="cat-name">Gaming</span>
       </a>
-
       <a routerLink="/products" class="category-card" style="--cat-color: #7C3AED">
         <span class="cat-icon">⌚</span>
         <span class="cat-name">Accessoires</span>
       </a>
-
       <a routerLink="/products" class="category-card" style="--cat-color: #9333EA">
         <span class="cat-icon">🏠</span>
         <span class="cat-name">Maison</span>
       </a>
-
     </div>
   </div>
 </section>
@@ -133,68 +123,67 @@
       <p>Les meilleures ventes du moment</p>
     </div>
 
-    <!-- Grille des produits populaires -->
+    <!-- ✅ Nouvelle syntaxe @for -->
     <div class="products-grid">
-      <div class="product-card" *ngFor="let product of featuredProducts">
+      @for (product of featuredProducts; track product.id) {
+        <div class="product-card">
 
-        <!-- Badge -->
-        <div class="product-badge" *ngIf="product.badge">
-          {{ product.badge }}
-        </div>
+          <!-- ✅ Nouvelle syntaxe @if -->
+          @if (product.badge) {
+            <div class="product-badge">{{ product.badge }}</div>
+          }
 
-        <!-- Image -->
-        <div class="product-image-wrapper">
-          <img [src]="product.image" [alt]="product.name"
-               class="product-image" />
-          <div class="product-overlay">
-            <a [routerLink]="['/products', product.id]"
-               class="overlay-btn">👁️ Voir</a>
-          </div>
-        </div>
-
-        <!-- Infos produit -->
-        <div class="product-info">
-          <span class="product-category">{{ product.category }}</span>
-          <h3 class="product-name">{{ product.name }}</h3>
-
-          <!-- Étoiles -->
-          <div class="product-rating">
-            <span class="stars">
-              <span *ngFor="let star of getStars(product.rating)">⭐</span>
-            </span>
-            <span class="rating-value">{{ product.rating }}</span>
-            <span class="reviews">({{ product.reviews }})</span>
+          <div class="product-image-wrapper">
+            <img [src]="product.image" [alt]="product.name"
+                 class="product-image" />
+            <div class="product-overlay">
+              <a [routerLink]="['/products', product.id]"
+                 class="overlay-btn">👁️ Voir</a>
+            </div>
           </div>
 
-          <!-- Prix -->
-          <div class="product-price">
-            <span class="price-current">{{ product.price }}€</span>
-            <span class="price-old" *ngIf="product.oldPrice">
-              {{ product.oldPrice }}€
-            </span>
-            <span class="price-discount"
-                  *ngIf="product.oldPrice">
-              -{{ getDiscount(product.price, product.oldPrice!) }}%
-            </span>
+          <div class="product-info">
+            <span class="product-category">{{ product.category }}</span>
+            <h3 class="product-name">{{ product.name }}</h3>
+
+            <!-- Étoiles -->
+            <div class="product-rating">
+              <span class="stars">
+                @for (star of getStars(product.rating); track $index) {
+                  <span>⭐</span>
+                }
+              </span>
+              <span class="rating-value">{{ product.rating }}</span>
+              <span class="reviews">({{ product.reviews }})</span>
+            </div>
+
+            <!-- Prix -->
+            <div class="product-price">
+              <span class="price-current">{{ product.price }}€</span>
+              @if (product.oldPrice) {
+                <span class="price-old">{{ product.oldPrice }}€</span>
+                <span class="price-discount">
+                  -{{ getDiscount(product.price, product.oldPrice) }}%
+                </span>
+              }
+            </div>
+
+            <!-- Bouton panier -->
+            <button class="add-to-cart-btn"
+                    (click)="addToCart(product)"
+                    [class.added]="addedProductId === product.id">
+              @if (addedProductId !== product.id) {
+                <span>🛒 Ajouter au panier</span>
+              } @else {
+                <span>✅ Ajouté !</span>
+              }
+            </button>
           </div>
 
-          <!-- Bouton ajouter au panier -->
-          <button class="add-to-cart-btn"
-                  (click)="addToCart(product)"
-                  [class.added]="addedProductId === product.id">
-            <span *ngIf="addedProductId !== product.id">
-              🛒 Ajouter au panier
-            </span>
-            <span *ngIf="addedProductId === product.id">
-              ✅ Ajouté !
-            </span>
-          </button>
         </div>
-
-      </div>
+      }
     </div>
 
-    <!-- Bouton voir tous les produits -->
     <div class="section-footer">
       <a routerLink="/products" class="btn-primary">
         Voir tous les produits →
@@ -209,33 +198,27 @@
 <!-- ═══════════════════════════════════════════════════════════════════════ -->
 <section class="features-section">
   <div class="container">
-
     <div class="features-grid">
-
       <div class="feature-card">
         <div class="feature-icon">🚚</div>
         <h3>Livraison Rapide</h3>
         <p>Livraison gratuite dès 50€. Recevez vos commandes en 24-48h.</p>
       </div>
-
       <div class="feature-card">
         <div class="feature-icon">🔒</div>
         <h3>Paiement Sécurisé</h3>
         <p>Vos données bancaires sont protégées par un cryptage SSL.</p>
       </div>
-
       <div class="feature-card">
         <div class="feature-icon">↩️</div>
         <h3>Retour Facile</h3>
         <p>30 jours pour changer d'avis. Retour gratuit sans questions.</p>
       </div>
-
       <div class="feature-card">
         <div class="feature-icon">💬</div>
         <h3>Support 24/7</h3>
         <p>Notre équipe est disponible à tout moment pour vous aider.</p>
       </div>
-
     </div>
   </div>
 </section>

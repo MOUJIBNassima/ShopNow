@@ -45,6 +45,10 @@ export class ProductDetail implements OnInit {
     // Lire le paramètre :id depuis l'URL
     this.route.params.subscribe(params => {
       const id = +params['id']; // + convertit string → number
+      this.product = null;
+      this.notFound = false;
+      this.quantity = 1;
+      this.isAdded = false;
       this.loadProduct(id);
     });
   }

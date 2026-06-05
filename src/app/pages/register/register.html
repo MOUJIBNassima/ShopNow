@@ -1,1 +1,216 @@
-<h1>📝 Register</h1>
+<!-- src/app/pages/register/register.html -->
+
+<div class="auth-page">
+  <div class="auth-container">
+
+    <!-- Côté visuel -->
+    <div class="auth-visual">
+      <div class="visual-content">
+        <span class="visual-logo">🛍️</span>
+        <h2>Rejoignez<br><strong>ShopNow</strong></h2>
+        <p>Créez votre compte gratuit et profitez d'une expérience shopping personnalisée.</p>
+        <div class="visual-features">
+          <div class="visual-feature">
+            <span>🎁</span>
+            <span>10% de réduction à l'inscription</span>
+          </div>
+          <div class="visual-feature">
+            <span>🚚</span>
+            <span>Livraison gratuite dès 50€</span>
+          </div>
+          <div class="visual-feature">
+            <span>⭐</span>
+            <span>Programme de fidélité exclusif</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulaire -->
+    <div class="auth-form-section">
+      <div class="auth-form-wrapper">
+
+        <div class="mobile-logo">
+          <span>🛍️</span><span>ShopNow</span>
+        </div>
+
+        <h1 class="form-title">Créer un compte</h1>
+        <p class="form-subtitle">
+          Déjà inscrit ?
+          <a routerLink="/login">Se connecter</a>
+        </p>
+
+        <!-- ✅ Nouvelle syntaxe @if -->
+        @if (errorMessage) {
+          <div class="error-alert">❌ {{ errorMessage }}</div>
+        }
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+          <!-- Prénom + Nom -->
+          <div class="form-row">
+
+            <div class="form-group">
+              <label class="form-label">Prénom</label>
+              <div class="input-wrapper"
+                   [class.error]="firstName.invalid && firstName.touched"
+                   [class.success]="firstName.valid && firstName.touched">
+                <span class="input-icon">👤</span>
+                <input type="text" formControlName="firstName"
+                       placeholder="Prénom" class="form-input" />
+              </div>
+              @if (firstName.invalid && firstName.touched) {
+                <div class="field-error">
+                  @if (firstName.errors?.['required']) {
+                    <span>Requis</span>
+                  }
+                  @if (firstName.errors?.['minlength']) {
+                    <span>Min. 2 caractères</span>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Nom</label>
+              <div class="input-wrapper"
+                   [class.error]="lastName.invalid && lastName.touched"
+                   [class.success]="lastName.valid && lastName.touched">
+                <span class="input-icon">👤</span>
+                <input type="text" formControlName="lastName"
+                       placeholder="Nom" class="form-input" />
+              </div>
+              @if (lastName.invalid && lastName.touched) {
+                <div class="field-error">
+                  @if (lastName.errors?.['required']) {
+                    <span>Requis</span>
+                  }
+                  @if (lastName.errors?.['minlength']) {
+                    <span>Min. 2 caractères</span>
+                  }
+                </div>
+              }
+            </div>
+
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label class="form-label">Adresse email</label>
+            <div class="input-wrapper"
+                 [class.error]="email.invalid && email.touched"
+                 [class.success]="email.valid && email.touched">
+              <span class="input-icon">✉️</span>
+              <input type="email" formControlName="email"
+                     placeholder="exemple@email.com" class="form-input" />
+            </div>
+            @if (email.invalid && email.touched) {
+              <div class="field-error">
+                @if (email.errors?.['required']) {
+                  <span>L'email est requis</span>
+                }
+                @if (email.errors?.['email']) {
+                  <span>Format invalide</span>
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Mot de passe -->
+          <div class="form-group">
+            <label class="form-label">Mot de passe</label>
+            <div class="input-wrapper"
+                 [class.error]="password.invalid && password.touched"
+                 [class.success]="password.valid && password.touched">
+              <span class="input-icon">🔒</span>
+              <input [type]="showPassword ? 'text' : 'password'"
+                     formControlName="password"
+                     placeholder="Min. 6 caractères"
+                     class="form-input" />
+              <button type="button" class="toggle-password"
+                      (click)="togglePassword()">
+                {{ showPassword ? '🙈' : '👁️' }}
+              </button>
+            </div>
+            @if (password.invalid && password.touched) {
+              <div class="field-error">
+                @if (password.errors?.['required']) {
+                  <span>Requis</span>
+                }
+                @if (password.errors?.['minlength']) {
+                  <span>Minimum 6 caractères</span>
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Confirmer mot de passe -->
+          <div class="form-group">
+            <label class="form-label">Confirmer le mot de passe</label>
+            <div class="input-wrapper"
+                 [class.error]="confirm.invalid && confirm.touched"
+                 [class.success]="confirm.valid && confirm.touched">
+              <span class="input-icon">🔒</span>
+              <input [type]="showConfirm ? 'text' : 'password'"
+                     formControlName="confirm"
+                     placeholder="Répétez le mot de passe"
+                     class="form-input" />
+              <button type="button" class="toggle-password"
+                      (click)="toggleConfirm()">
+                {{ showConfirm ? '🙈' : '👁️' }}
+              </button>
+            </div>
+            @if (confirm.invalid && confirm.touched) {
+              <div class="field-error">
+                @if (confirm.errors?.['required']) {
+                  <span>Requis</span>
+                }
+                @if (confirm.errors?.['mismatch']) {
+                  <span>Les mots de passe ne correspondent pas</span>
+                }
+              </div>
+            }
+          </div>
+
+          <!-- CGU -->
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" formControlName="terms" />
+              <span class="checkmark"></span>
+              <span>
+                J'accepte les
+                <a href="#">conditions d'utilisation</a>
+                et la
+                <a href="#">politique de confidentialité</a>
+              </span>
+            </label>
+            @if (terms.invalid && terms.touched) {
+              <div class="field-error">
+                Vous devez accepter les conditions
+              </div>
+            }
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="btn-submit" [disabled]="isLoading">
+            @if (!isLoading) {
+              <span>Créer mon compte →</span>
+            } @else {
+              <span class="loading-text">
+                <span class="btn-spinner"></span>
+                Création...
+              </span>
+            }
+          </button>
+
+        </form>
+
+        <p class="auth-switch">
+          Déjà un compte ?
+          <a routerLink="/login">Se connecter</a>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>

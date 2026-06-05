@@ -1,1 +1,274 @@
-<h1>💳 Checkout</h1>
+<!-- src/app/pages/checkout/checkout.html -->
+
+<div class="checkout-page">
+  <div class="container">
+
+    <!-- ─── Header ──────────────────────────────────────────────────── -->
+    <div class="checkout-header">
+      <h1>
+        <span class="gradient-text">Finaliser</span> ma commande
+      </h1>
+
+      <!-- Indicateur d'étapes -->
+      <div class="steps-indicator">
+        <div class="step"
+             [class.active]="currentStep >= 1"
+             [class.done]="currentStep > 1">
+          <span class="step-num">1</span>
+          <span class="step-label">Livraison</span>
+        </div>
+        <div class="step-line" [class.done]="currentStep > 1"></div>
+        <div class="step" [class.active]="currentStep >= 2">
+          <span class="step-num">2</span>
+          <span class="step-label">Confirmation</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ Nouvelle syntaxe @if / @else -->
+    @if (!orderSuccess) {
+
+      <!-- ═══ ÉTAPE 1 : Formulaire ════════════════════════════════════ -->
+      <div class="checkout-content">
+        <div class="checkout-grid">
+
+          <!-- Formulaire -->
+          <div class="form-section">
+            <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+
+              <!-- Infos personnelles -->
+              <div class="form-card">
+                <h3 class="card-title">👤 Informations personnelles</h3>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Prénom *</label>
+                    <input type="text" formControlName="firstName"
+                           class="form-input"
+                           [class.error]="firstName.invalid && firstName.touched"
+                           placeholder="Votre prénom" />
+                    @if (firstName.invalid && firstName.touched) {
+                      <span class="field-error">Requis</span>
+                    }
+                  </div>
+                  <div class="form-group">
+                    <label>Nom *</label>
+                    <input type="text" formControlName="lastName"
+                           class="form-input"
+                           [class.error]="lastName.invalid && lastName.touched"
+                           placeholder="Votre nom" />
+                    @if (lastName.invalid && lastName.touched) {
+                      <span class="field-error">Requis</span>
+                    }
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" formControlName="email"
+                           class="form-input"
+                           [class.error]="email.invalid && email.touched"
+                           placeholder="email@exemple.com" />
+                    @if (email.invalid && email.touched) {
+                      <span class="field-error">Email invalide</span>
+                    }
+                  </div>
+                  <div class="form-group">
+                    <label>Téléphone *</label>
+                    <input type="tel" formControlName="phone"
+                           class="form-input"
+                           [class.error]="phone.invalid && phone.touched"
+                           placeholder="0600000000" />
+                    @if (phone.invalid && phone.touched) {
+                      <span class="field-error">10 chiffres requis</span>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <!-- Adresse livraison -->
+              <div class="form-card">
+                <h3 class="card-title">🚚 Adresse de livraison</h3>
+
+                <div class="form-group">
+                  <label>Adresse *</label>
+                  <input type="text" formControlName="address"
+                         class="form-input"
+                         [class.error]="address.invalid && address.touched"
+                         placeholder="Numéro et nom de rue" />
+                  @if (address.invalid && address.touched) {
+                    <span class="field-error">
+                      Adresse requise (min. 5 caractères)
+                    </span>
+                  }
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Ville *</label>
+                    <input type="text" formControlName="city"
+                           class="form-input"
+                           [class.error]="city.invalid && city.touched"
+                           placeholder="Votre ville" />
+                    @if (city.invalid && city.touched) {
+                      <span class="field-error">Requis</span>
+                    }
+                  </div>
+                  <div class="form-group">
+                    <label>Code postal *</label>
+                    <input type="text" formControlName="zipCode"
+                           class="form-input"
+                           [class.error]="zipCode.invalid && zipCode.touched"
+                           placeholder="20000" />
+                    @if (zipCode.invalid && zipCode.touched) {
+                      <span class="field-error">
+                        Code postal invalide (ex: 20000)
+                      </span>
+                    }
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Pays</label>
+                  <select formControlName="country" class="form-input">
+                    <option value="Maroc">Maroc</option>
+                    <option value="France">France</option>
+                    <option value="Belgique">Belgique</option>
+                    <option value="Suisse">Suisse</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Mode de paiement -->
+              <div class="form-card">
+                <h3 class="card-title">💳 Mode de paiement</h3>
+                <div class="payment-options">
+
+                  <label class="payment-option"
+                         [class.selected]="paymentMethod.value === 'card'">
+                    <input type="radio" formControlName="paymentMethod"
+                           value="card" />
+                    <span class="payment-icon">💳</span>
+                    <span>Carte bancaire</span>
+                  </label>
+
+                  <label class="payment-option"
+                         [class.selected]="paymentMethod.value === 'cash'">
+                    <input type="radio" formControlName="paymentMethod"
+                           value="cash" />
+                    <span class="payment-icon">💵</span>
+                    <span>Paiement à la livraison</span>
+                  </label>
+
+                  <label class="payment-option"
+                         [class.selected]="paymentMethod.value === 'transfer'">
+                    <input type="radio" formControlName="paymentMethod"
+                           value="transfer" />
+                    <span class="payment-icon">🏦</span>
+                    <span>Virement bancaire</span>
+                  </label>
+
+                </div>
+              </div>
+
+              <!-- Bouton commander -->
+              <button type="submit" class="btn-order">
+                ✅ Confirmer la commande —
+                {{ getTotal().toFixed(2) }}€
+              </button>
+
+            </form>
+          </div>
+
+          <!-- Résumé commande -->
+          <div class="summary-section">
+            <div class="summary-card">
+              <h3>Récapitulatif</h3>
+
+              <!-- ✅ Nouvelle syntaxe @for -->
+              <div class="summary-items">
+                @for (item of cartItems; track item.product.id) {
+                  <div class="summary-item">
+                    <img [src]="item.product.image"
+                         [alt]="item.product.name"
+                         class="summary-img" />
+                    <div class="summary-item-info">
+                      <span class="summary-item-name">
+                        {{ item.product.name }}
+                      </span>
+                      <span class="summary-item-qty">
+                        × {{ item.quantity }}
+                      </span>
+                    </div>
+                    <span class="summary-item-price">
+                      {{ (item.product.price * item.quantity).toFixed(2) }}€
+                    </span>
+                  </div>
+                }
+              </div>
+
+              <!-- Totaux -->
+              <div class="summary-totals">
+                <div class="total-line">
+                  <span>Sous-total</span>
+                  <span>{{ getSubtotal().toFixed(2) }}€</span>
+                </div>
+                <div class="total-line">
+                  <span>Livraison</span>
+                  @if (getShipping() > 0) {
+                    <span>{{ getShipping().toFixed(2) }}€</span>
+                  } @else {
+                    <span class="free-label">Gratuite 🎉</span>
+                  }
+                </div>
+                <div class="total-line total-final">
+                  <span>Total</span>
+                  <span>{{ getTotal().toFixed(2) }}€</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    } @else {
+
+      <!-- ═══ ÉTAPE 2 : Confirmation ══════════════════════════════════ -->
+      <div class="success-page">
+        <div class="success-card">
+          <div class="success-animation">🎉</div>
+          <h2>Commande confirmée !</h2>
+          <p class="order-number">
+            Numéro de commande :
+            <strong>{{ orderNumber }}</strong>
+          </p>
+          <p class="success-msg">
+            Merci pour votre commande ! Vous recevrez une
+            confirmation par email sous peu.
+          </p>
+          <div class="success-details">
+            <div class="success-detail">
+              <span>📦</span>
+              <span>Préparation en cours</span>
+            </div>
+            <div class="success-detail">
+              <span>🚚</span>
+              <span>Livraison estimée : 2-3 jours</span>
+            </div>
+            <div class="success-detail">
+              <span>✉️</span>
+              <span>Email de confirmation envoyé</span>
+            </div>
+          </div>
+          <button class="btn-home" (click)="goHome()">
+            🏠 Retour à l'accueil
+          </button>
+        </div>
+      </div>
+
+    }
+
+  </div>
+</div>

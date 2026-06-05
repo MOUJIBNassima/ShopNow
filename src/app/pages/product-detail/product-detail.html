@@ -3,24 +3,26 @@
 <div class="detail-page">
   <div class="container">
 
-    <!-- ─── Loading ────────────────────────────────────────────────────── -->
-    <div class="loading-wrapper" *ngIf="isLoading">
-      <div class="spinner"></div>
-      <p>Chargement du produit...</p>
-    </div>
+    <!-- ✅ Nouvelle syntaxe @if -->
+    @if (isLoading) {
+      <div class="loading-wrapper">
+        <div class="spinner"></div>
+        <p>Chargement du produit...</p>
+      </div>
+    }
 
-    <!-- ─── Produit non trouvé ─────────────────────────────────────────── -->
-    <div class="not-found" *ngIf="notFound">
-      <span>😕</span>
-      <h2>Produit introuvable</h2>
-      <p>Ce produit n'existe pas ou a été supprimé.</p>
-      <a routerLink="/products" class="btn-primary">
-        ← Retour aux produits
-      </a>
-    </div>
+    @if (notFound) {
+      <div class="not-found">
+        <span>😕</span>
+        <h2>Produit introuvable</h2>
+        <p>Ce produit n'existe pas ou a été supprimé.</p>
+        <a routerLink="/products" class="btn-primary">
+          ← Retour aux produits
+        </a>
+      </div>
+    }
 
-    <!-- ─── Contenu produit ────────────────────────────────────────────── -->
-    <div *ngIf="product && !isLoading">
+    @if (product && !isLoading) {
 
       <!-- Fil d'ariane -->
       <div class="breadcrumb">
@@ -34,100 +36,96 @@
       <!-- Détail principal -->
       <div class="product-detail-grid">
 
-        <!-- ─── Image ──────────────────────────────────────────────────── -->
+        <!-- Image -->
         <div class="image-section">
           <div class="main-image-wrapper">
             <img [src]="product.image"
                  [alt]="product.name"
                  class="main-image" />
-            <!-- Badge promo -->
-            <div class="image-badge" *ngIf="product.badge">
-              {{ product.badge }}
-            </div>
-            <!-- Réduction -->
-            <div class="discount-badge" *ngIf="product.oldPrice">
-              -{{ getDiscount(product.price, product.oldPrice) }}%
-            </div>
+            @if (product.badge) {
+              <div class="image-badge">{{ product.badge }}</div>
+            }
+            @if (product.oldPrice) {
+              <div class="discount-badge">
+                -{{ getDiscount(product.price, product.oldPrice) }}%
+              </div>
+            }
           </div>
         </div>
 
-        <!-- ─── Infos ───────────────────────────────────────────────────── -->
+        <!-- Infos -->
         <div class="info-section">
 
-          <!-- Catégorie & Badge -->
           <div class="product-meta">
             <span class="category-tag">{{ product.category }}</span>
-            <span class="stock-tag" *ngIf="product.stock <= 5">
-              🔥 Stock limité
-            </span>
+            @if (product.stock <= 5) {
+              <span class="stock-tag">🔥 Stock limité</span>
+            }
           </div>
 
-          <!-- Nom -->
           <h1 class="product-title">{{ product.name }}</h1>
 
-          <!-- Rating -->
           <div class="rating-row">
             <div class="stars">
-              <span *ngFor="let s of getStars(product.rating)">⭐</span>
-              <span class="empty-star"
-                    *ngFor="let s of getEmptyStars(product.rating)">
-                ☆
-              </span>
+              @for (s of getStars(product.rating); track $index) {
+                <span>⭐</span>
+              }
+              @for (s of getEmptyStars(product.rating); track $index) {
+                <span class="empty-star">☆</span>
+              }
             </div>
             <span class="rating-num">{{ product.rating }}/5</span>
-            <span class="rating-count">
-              ({{ product.reviews }} avis)
-            </span>
+            <span class="rating-count">({{ product.reviews }} avis)</span>
           </div>
 
           <!-- Prix -->
           <div class="price-section">
             <span class="price-main">{{ product.price }}€</span>
-            <div class="price-old-wrapper" *ngIf="product.oldPrice">
-              <span class="price-old">{{ product.oldPrice }}€</span>
-              <span class="price-saved">
-                Économisez
-                {{ product.oldPrice - product.price }}€
-              </span>
-            </div>
+            @if (product.oldPrice) {
+              <div class="price-old-wrapper">
+                <span class="price-old">{{ product.oldPrice }}€</span>
+                <span class="price-saved">
+                  Économisez {{ product.oldPrice - product.price }}€
+                </span>
+              </div>
+            }
           </div>
 
-          <!-- Description -->
           <p class="product-description">{{ product.description }}</p>
 
           <!-- Stock -->
           <div class="stock-info">
-            <span class="stock-icon" *ngIf="product.stock > 5">✅</span>
-            <span class="stock-icon" *ngIf="product.stock <= 5">⚠️</span>
+            @if (product.stock > 5) {
+              <span class="stock-icon">✅</span>
+            } @else {
+              <span class="stock-icon">⚠️</span>
+            }
             <span class="stock-text">
               <strong>{{ product.stock }}</strong> en stock
             </span>
           </div>
 
-          <!-- Sélecteur de quantité -->
+          <!-- Quantité -->
           <div class="quantity-section">
             <span class="qty-label">Quantité :</span>
             <div class="qty-controls">
               <button class="qty-btn"
                       (click)="decreaseQty()"
-                      [disabled]="quantity <= 1">
-                −
-              </button>
+                      [disabled]="quantity <= 1">−</button>
               <span class="qty-value">{{ quantity }}</span>
               <button class="qty-btn"
                       (click)="increaseQty()"
-                      [disabled]="quantity >= product.stock">
-                +
-              </button>
+                      [disabled]="quantity >= product.stock">+</button>
             </div>
           </div>
 
-          <!-- Message confirmation -->
-          <div class="success-msg" *ngIf="isAdded">
-            ✅ Produit ajouté au panier avec succès !
-          </div>
+          @if (isAdded) {
+            <div class="success-msg">
+              ✅ Produit ajouté au panier avec succès !
+            </div>
+          }
 
-          <!-- Boutons d'action -->
+          <!-- Boutons -->
           <div class="action-buttons">
             <button class="btn-cart"
                     (click)="addToCart()"
@@ -142,41 +140,41 @@
           <!-- Garanties -->
           <div class="guarantees">
             <div class="guarantee-item">
-              <span>🚚</span>
-              <span>Livraison gratuite</span>
+              <span>🚚</span><span>Livraison gratuite</span>
             </div>
             <div class="guarantee-item">
-              <span>↩️</span>
-              <span>Retour 30 jours</span>
+              <span>↩️</span><span>Retour 30 jours</span>
             </div>
             <div class="guarantee-item">
-              <span>🔒</span>
-              <span>Paiement sécurisé</span>
+              <span>🔒</span><span>Paiement sécurisé</span>
             </div>
           </div>
 
         </div>
       </div>
 
-      <!-- ─── Produits similaires ─────────────────────────────────────── -->
-      <div class="similar-section" *ngIf="similarProducts.length > 0">
-        <h2>Produits <span class="gradient-text">Similaires</span></h2>
-        <div class="similar-grid">
-          <div class="similar-card"
-               *ngFor="let p of similarProducts">
-            <img [src]="p.image" [alt]="p.name" class="similar-img" />
-            <div class="similar-info">
-              <h4>{{ p.name }}</h4>
-              <span class="similar-price">{{ p.price }}€</span>
-              <a [routerLink]="['/products', p.id]"
-                 class="similar-link">
-                Voir →
-              </a>
-            </div>
+      <!-- Produits similaires -->
+      @if (similarProducts.length > 0) {
+        <div class="similar-section">
+          <h2>Produits <span class="gradient-text">Similaires</span></h2>
+          <div class="similar-grid">
+            @for (p of similarProducts; track p.id) {
+              <div class="similar-card">
+                <img [src]="p.image" [alt]="p.name" class="similar-img" />
+                <div class="similar-info">
+                  <h4>{{ p.name }}</h4>
+                  <span class="similar-price">{{ p.price }}€</span>
+                  <a [routerLink]="['/products', p.id]" class="similar-link">
+                    Voir →
+                  </a>
+                </div>
+              </div>
+            }
           </div>
         </div>
-      </div>
+      }
 
-    </div>
+    }
+
   </div>
 </div>

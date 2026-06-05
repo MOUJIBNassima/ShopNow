@@ -2,7 +2,6 @@
 
 <div class="products-page">
 
-  <!-- ─── Header de la page ──────────────────────────────────────────────── -->
   <div class="page-hero">
     <div class="container">
       <h1>Nos <span class="gradient-text">Produits</span></h1>
@@ -12,7 +11,7 @@
 
   <div class="container">
 
-    <!-- ─── Barre de recherche ───────────────────────────────────────────── -->
+    <!-- Barre de recherche -->
     <div class="search-bar-wrapper">
       <div class="search-bar">
         <span class="search-icon">🔍</span>
@@ -23,15 +22,14 @@
           (ngModelChange)="onSearch()"
           class="search-input"
         />
-        <!-- Bouton effacer recherche -->
-        <button class="clear-btn"
-                *ngIf="searchQuery"
-                (click)="searchQuery=''; onSearch()">
-          ✕
-        </button>
+        <!-- ✅ Nouvelle syntaxe @if -->
+        @if (searchQuery) {
+          <button class="clear-btn" (click)="searchQuery=''; onSearch()">
+            ✕
+          </button>
+        }
       </div>
 
-      <!-- Tri -->
       <div class="sort-wrapper">
         <select [(ngModel)]="selectedSort"
                 (ngModelChange)="onSortChange()"
@@ -45,128 +43,125 @@
       </div>
     </div>
 
-    <!-- ─── Filtres catégories ───────────────────────────────────────────── -->
+    <!-- Filtres catégories -->
     <div class="categories-filter">
-      <button
-        *ngFor="let cat of categories"
-        class="filter-btn"
-        [class.active]="selectedCategory === cat"
-        (click)="onCategoryChange(cat)">
-        {{ cat }}
-      </button>
+      <!-- ✅ Nouvelle syntaxe @for -->
+      @for (cat of categories; track cat) {
+        <button
+          class="filter-btn"
+          [class.active]="selectedCategory === cat"
+          (click)="onCategoryChange(cat)">
+          {{ cat }}
+        </button>
+      }
     </div>
 
-    <!-- ─── Résultats info ───────────────────────────────────────────────── -->
+    <!-- Résultats info -->
     <div class="results-info">
       <span class="results-count">
         <strong>{{ filteredProducts.length }}</strong> produit(s) trouvé(s)
       </span>
-      <button class="reset-btn"
-              *ngIf="searchQuery || selectedCategory !== 'Tous'"
-              (click)="resetFilters()">
-        ↺ Réinitialiser les filtres
-      </button>
+      @if (searchQuery || selectedCategory !== 'Tous') {
+        <button class="reset-btn" (click)="resetFilters()">
+          ↺ Réinitialiser les filtres
+        </button>
+      }
     </div>
 
-    <!-- ─── Loading ──────────────────────────────────────────────────────── -->
-    <div class="loading-wrapper" *ngIf="isLoading">
-      <div class="spinner"></div>
-      <p>Chargement des produits...</p>
-    </div>
-
-    <!-- ─── Grille produits ──────────────────────────────────────────────── -->
-    <div class="products-grid" *ngIf="!isLoading">
-
-      <!-- Carte produit -->
-      <div class="product-card"
-           *ngFor="let product of filteredProducts">
-
-        <!-- Badge -->
-        <div class="product-badge" *ngIf="product.badge">
-          {{ product.badge }}
-        </div>
-
-        <!-- Stock faible -->
-        <div class="low-stock" *ngIf="product.stock <= 5">
-          🔥 Plus que {{ product.stock }} en stock !
-        </div>
-
-        <!-- Image -->
-        <div class="product-image-wrapper">
-          <img [src]="product.image"
-               [alt]="product.name"
-               class="product-image" />
-          <div class="product-overlay">
-            <a [routerLink]="['/products', product.id]"
-               class="overlay-btn">
-              👁️ Voir le détail
-            </a>
-          </div>
-        </div>
-
-        <!-- Infos -->
-        <div class="product-info">
-          <span class="product-category">{{ product.category }}</span>
-          <h3 class="product-name">{{ product.name }}</h3>
-
-          <!-- Rating -->
-          <div class="product-rating">
-            <span class="stars">
-              <span *ngFor="let s of getStars(product.rating)">⭐</span>
-            </span>
-            <span class="rating-value">{{ product.rating }}</span>
-            <span class="reviews">({{ product.reviews }})</span>
-          </div>
-
-          <!-- Description courte -->
-          <p class="product-desc">{{ product.description }}</p>
-
-          <!-- Prix -->
-          <div class="product-price">
-            <span class="price-current">{{ product.price }}€</span>
-            <span class="price-old" *ngIf="product.oldPrice">
-              {{ product.oldPrice }}€
-            </span>
-            <span class="price-discount" *ngIf="product.oldPrice">
-              -{{ getDiscount(product.price, product.oldPrice!) }}%
-            </span>
-          </div>
-
-          <!-- Actions -->
-          <div class="product-actions">
-            <button
-              class="add-to-cart-btn"
-              (click)="addToCart(product)"
-              [class.added]="addedProductId === product.id">
-              <span *ngIf="addedProductId !== product.id">
-                🛒 Ajouter
-              </span>
-              <span *ngIf="addedProductId === product.id">
-                ✅ Ajouté !
-              </span>
-            </button>
-
-            <a [routerLink]="['/products', product.id]"
-               class="detail-btn">
-              →
-            </a>
-          </div>
-
-        </div>
+    <!-- Loading -->
+    @if (isLoading) {
+      <div class="loading-wrapper">
+        <div class="spinner"></div>
+        <p>Chargement des produits...</p>
       </div>
+    }
 
-    </div>
+    <!-- Grille produits -->
+    @if (!isLoading) {
+      <div class="products-grid">
+        @for (product of filteredProducts; track product.id) {
+          <div class="product-card">
 
-    <!-- ─── Aucun résultat ────────────────────────────────────────────────── -->
-    <div class="empty-state"
-         *ngIf="!isLoading && filteredProducts.length === 0">
-      <span class="empty-icon">🔍</span>
-      <h3>Aucun produit trouvé</h3>
-      <p>Essayez avec d'autres mots-clés ou réinitialisez les filtres</p>
-      <button class="btn-primary" (click)="resetFilters()">
-        Voir tous les produits
-      </button>
-    </div>
+            @if (product.badge) {
+              <div class="product-badge">{{ product.badge }}</div>
+            }
+
+            @if (product.stock <= 5) {
+              <div class="low-stock">
+                🔥 Plus que {{ product.stock }} en stock !
+              </div>
+            }
+
+            <div class="product-image-wrapper">
+              <img [src]="product.image"
+                   [alt]="product.name"
+                   class="product-image" />
+              <div class="product-overlay">
+                <a [routerLink]="['/products', product.id]"
+                   class="overlay-btn">
+                  👁️ Voir le détail
+                </a>
+              </div>
+            </div>
+
+            <div class="product-info">
+              <span class="product-category">{{ product.category }}</span>
+              <h3 class="product-name">{{ product.name }}</h3>
+
+              <div class="product-rating">
+                <span class="stars">
+                  @for (s of getStars(product.rating); track $index) {
+                    <span>⭐</span>
+                  }
+                </span>
+                <span class="rating-value">{{ product.rating }}</span>
+                <span class="reviews">({{ product.reviews }})</span>
+              </div>
+
+              <p class="product-desc">{{ product.description }}</p>
+
+              <div class="product-price">
+                <span class="price-current">{{ product.price }}€</span>
+                @if (product.oldPrice) {
+                  <span class="price-old">{{ product.oldPrice }}€</span>
+                  <span class="price-discount">
+                    -{{ getDiscount(product.price, product.oldPrice) }}%
+                  </span>
+                }
+              </div>
+
+              <div class="product-actions">
+                <button
+                  class="add-to-cart-btn"
+                  (click)="addToCart(product)"
+                  [class.added]="addedProductId === product.id">
+                  @if (addedProductId !== product.id) {
+                    <span>🛒 Ajouter</span>
+                  } @else {
+                    <span>✅ Ajouté !</span>
+                  }
+                </button>
+                <a [routerLink]="['/products', product.id]"
+                   class="detail-btn">→</a>
+              </div>
+            </div>
+
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Aucun résultat -->
+    @if (!isLoading && filteredProducts.length === 0) {
+      <div class="empty-state">
+        <span class="empty-icon">🔍</span>
+        <h3>Aucun produit trouvé</h3>
+        <p>Essayez avec d'autres mots-clés ou réinitialisez les filtres</p>
+        <button class="btn-primary" (click)="resetFilters()">
+          Voir tous les produits
+        </button>
+      </div>
+    }
 
   </div>
 </div>
