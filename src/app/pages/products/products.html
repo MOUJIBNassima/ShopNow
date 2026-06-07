@@ -4,6 +4,13 @@
 
   <div class="page-hero">
     <div class="container">
+      @if (showLoginAlert) {
+      <div class="login-alert">
+        <span>🔐</span>
+        <span>Connectez-vous pour ajouter aux favoris...</span>
+        <div class="alert-bar"></div>
+      </div>
+      }
       <h1>Nos <span class="gradient-text">Produits</span></h1>
       <p>Découvrez notre sélection de produits premium</p>
     </div>
@@ -11,29 +18,19 @@
 
   <div class="container">
 
-    <!-- Barre de recherche -->
+    <!-- ─── Barre de recherche principale ───────────────────────────────── -->
     <div class="search-bar-wrapper">
       <div class="search-bar">
         <span class="search-icon">🔍</span>
-        <input
-          type="text"
-          placeholder="Rechercher un produit..."
-          [(ngModel)]="searchQuery"
-          (ngModelChange)="onSearch()"
-          class="search-input"
-        />
-        <!-- ✅ Nouvelle syntaxe @if -->
+        <input type="text" placeholder="Rechercher un produit..." [(ngModel)]="searchQuery" (ngModelChange)="onSearch()"
+          class="search-input" />
         @if (searchQuery) {
-          <button class="clear-btn" (click)="searchQuery=''; onSearch()">
-            ✕
-          </button>
+        <button class="clear-btn" (click)="searchQuery=''; onSearch()">✕</button>
         }
       </div>
 
       <div class="sort-wrapper">
-        <select [(ngModel)]="selectedSort"
-                (ngModelChange)="onSortChange()"
-                class="sort-select">
+        <select [(ngModel)]="selectedSort" (ngModelChange)="onSortChange()" class="sort-select">
           <option value="default">Trier par...</option>
           <option value="price-asc">Prix croissant</option>
           <option value="price-desc">Prix décroissant</option>
@@ -41,127 +38,199 @@
           <option value="name">Nom A-Z</option>
         </select>
       </div>
+
+      <!-- Bouton filtres avancés -->
+      <button class="btn-advanced-filters" (click)="showAdvancedFilters = !showAdvancedFilters"
+        [class.active]="showAdvancedFilters">
+        ⚙️ Filtres avancés
+        @if (hasActiveFilters()) {
+        <span class="filters-dot"></span>
+        }
+      </button>
     </div>
 
-    <!-- Filtres catégories -->
+    <!-- ─── Filtres avancés (panneau dépliable) ──────────────────────────── -->
+    @if (showAdvancedFilters) {
+    <div class="advanced-filters-panel">
+
+      <!-- Fourchette de prix -->
+      <div class="filter-group">
+        <h4 class="filter-title">💰 Fourchette de prix</h4>
+        <div class="price-range">
+          <div class="price-inputs">
+            <div class="price-input-group">
+              <label>Min</label>
+              <input type="number" [(ngModel)]="currentMinPrice" (ngModelChange)="onPriceChange()" [min]="0"
+                [max]="currentMaxPrice" class="price-input" />
+              <span>€</span>
+            </div>
+            <span class="price-separator">—</span>
+            <div class="price-input-group">
+              <label>Max</label>
+              <input type="number" [(ngModel)]="currentMaxPrice" (ngModelChange)="onPriceChange()"
+                [min]="currentMinPrice" [max]="maxPrice" class="price-input" />
+              <span>€</span>
+            </div>
+          </div>
+          <div class="price-display">
+            <span>{{ currentMinPrice }}€</span>
+            <span>{{ currentMaxPrice }}€</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Note minimum -->
+      <div class="filter-group">
+        <h4 class="filter-title">⭐ Note minimum</h4>
+        <div class="rating-filter">
+          <button class="rating-btn" [class.active]="minRating === 0" (click)="minRating = 0; onRatingChange()">
+            Toutes
+          </button>
+          @for (n of [3, 4, 4.5]; track n) {
+          <button class="rating-btn" [class.active]="minRating === n" (click)="minRating = n; onRatingChange()">
+            {{ n }}+ ⭐
+          </button>
+          }
+        </div>
+      </div>
+
+      <!-- Badge -->
+      <div class="filter-group">
+        <h4 class="filter-title">🏷️ Badge</h4>
+        <div class="badge-filter">
+          @for (badge of badges; track badge) {
+          <button class="badge-btn" [class.active]="selectedBadge === badge" (click)="onBadgeChange(badge)">
+            {{ badge }}
+          </button>
+          }
+        </div>
+      </div>
+
+      <!-- Stock disponible -->
+      <div class="filter-group">
+        <h4 class="filter-title">📦 Disponibilité</h4>
+        <label class="toggle-label">
+          <input type="checkbox" [(ngModel)]="onlyInStock" (ngModelChange)="onStockChange()" />
+          <span class="toggle-switch"></span>
+          <span>En stock uniquement</span>
+        </label>
+      </div>
+
+    </div>
+    }
+
+    <!-- ─── Filtres catégories ───────────────────────────────────────────── -->
     <div class="categories-filter">
-      <!-- ✅ Nouvelle syntaxe @for -->
       @for (cat of categories; track cat) {
-        <button
-          class="filter-btn"
-          [class.active]="selectedCategory === cat"
-          (click)="onCategoryChange(cat)">
-          {{ cat }}
-        </button>
+      <button class="filter-btn" [class.active]="selectedCategory === cat" (click)="onCategoryChange(cat)">
+        {{ cat }}
+      </button>
       }
     </div>
 
-    <!-- Résultats info -->
+    <!-- ─── Résultats info ───────────────────────────────────────────────── -->
     <div class="results-info">
       <span class="results-count">
         <strong>{{ filteredProducts.length }}</strong> produit(s) trouvé(s)
       </span>
-      @if (searchQuery || selectedCategory !== 'Tous') {
-        <button class="reset-btn" (click)="resetFilters()">
-          ↺ Réinitialiser les filtres
-        </button>
+      @if (hasActiveFilters()) {
+      <button class="reset-btn" (click)="resetFilters()">
+        ↺ Réinitialiser les filtres
+      </button>
       }
     </div>
 
     <!-- Loading -->
     @if (isLoading) {
-      <div class="loading-wrapper">
-        <div class="spinner"></div>
-        <p>Chargement des produits...</p>
-      </div>
+    <div class="loading-wrapper">
+      <div class="spinner"></div>
+      <p>Chargement des produits...</p>
+    </div>
     }
 
     <!-- Grille produits -->
     @if (!isLoading) {
-      <div class="products-grid">
-        @for (product of filteredProducts; track product.id) {
-          <div class="product-card">
+    <div class="products-grid">
+      @for (product of filteredProducts; track product.id) {
+      <div class="product-card">
 
-            @if (product.badge) {
-              <div class="product-badge">{{ product.badge }}</div>
-            }
-
-            @if (product.stock <= 5) {
-              <div class="low-stock">
-                🔥 Plus que {{ product.stock }} en stock !
-              </div>
-            }
-
-            <div class="product-image-wrapper">
-              <img [src]="product.image"
-                   [alt]="product.name"
-                   class="product-image" />
-              <div class="product-overlay">
-                <a [routerLink]="['/products', product.id]"
-                   class="overlay-btn">
-                  👁️ Voir le détail
-                </a>
-              </div>
-            </div>
-
-            <div class="product-info">
-              <span class="product-category">{{ product.category }}</span>
-              <h3 class="product-name">{{ product.name }}</h3>
-
-              <div class="product-rating">
-                <span class="stars">
-                  @for (s of getStars(product.rating); track $index) {
-                    <span>⭐</span>
-                  }
-                </span>
-                <span class="rating-value">{{ product.rating }}</span>
-                <span class="reviews">({{ product.reviews }})</span>
-              </div>
-
-              <p class="product-desc">{{ product.description }}</p>
-
-              <div class="product-price">
-                <span class="price-current">{{ product.price }}€</span>
-                @if (product.oldPrice) {
-                  <span class="price-old">{{ product.oldPrice }}€</span>
-                  <span class="price-discount">
-                    -{{ getDiscount(product.price, product.oldPrice) }}%
-                  </span>
-                }
-              </div>
-
-              <div class="product-actions">
-                <button
-                  class="add-to-cart-btn"
-                  (click)="addToCart(product)"
-                  [class.added]="addedProductId === product.id">
-                  @if (addedProductId !== product.id) {
-                    <span>🛒 Ajouter</span>
-                  } @else {
-                    <span>✅ Ajouté !</span>
-                  }
-                </button>
-                <a [routerLink]="['/products', product.id]"
-                   class="detail-btn">→</a>
-              </div>
-            </div>
-
-          </div>
+        @if (product.badge) {
+        <div class="product-badge">{{ product.badge }}</div>
         }
-      </div>
-    }
 
-    <!-- Aucun résultat -->
-    @if (!isLoading && filteredProducts.length === 0) {
-      <div class="empty-state">
-        <span class="empty-icon">🔍</span>
-        <h3>Aucun produit trouvé</h3>
-        <p>Essayez avec d'autres mots-clés ou réinitialisez les filtres</p>
-        <button class="btn-primary" (click)="resetFilters()">
-          Voir tous les produits
-        </button>
+        @if (product.stock <= 5) { <div class="low-stock">🔥 Plus que {{ product.stock }} !
       </div>
-    }
+      }
 
+      <!-- Bouton favori -->
+      <button class="fav-btn" (click)="toggleFavorite(product)" [class.active]="isFavorite(product.id)"
+        title="Ajouter aux favoris">
+        {{ isFavorite(product.id) ? '❤️' : '🤍' }}
+      </button>
+
+      <div class="product-image-wrapper">
+        <img [src]="product.image" [alt]="product.name" class="product-image" />
+        <div class="product-overlay">
+          <a [routerLink]="['/products', product.id]" class="overlay-btn">
+            👁️ Voir le détail
+          </a>
+        </div>
+      </div>
+
+      <div class="product-info">
+        <span class="product-category">{{ product.category }}</span>
+        <h3 class="product-name">{{ product.name }}</h3>
+
+        <div class="product-rating">
+          <span class="stars">
+            @for (s of getStars(product.rating); track $index) {
+            <span>⭐</span>
+            }
+          </span>
+          <span class="rating-value">{{ product.rating }}</span>
+          <span class="reviews">({{ product.reviews }})</span>
+        </div>
+
+        <p class="product-desc">{{ product.description }}</p>
+
+        <div class="product-price">
+          <span class="price-current">{{ product.price }}€</span>
+          @if (product.oldPrice) {
+          <span class="price-old">{{ product.oldPrice }}€</span>
+          <span class="price-discount">
+            -{{ getDiscount(product.price, product.oldPrice) }}%
+          </span>
+          }
+        </div>
+
+        <div class="product-actions">
+          <button class="add-to-cart-btn" (click)="addToCart(product)" [class.added]="addedProductId === product.id">
+            @if (addedProductId !== product.id) {
+            <span>🛒 Ajouter</span>
+            } @else {
+            <span>✅ Ajouté !</span>
+            }
+          </button>
+          <a [routerLink]="['/products', product.id]" class="detail-btn">→</a>
+        </div>
+      </div>
+
+    </div>
+    }
   </div>
+  }
+
+  <!-- Aucun résultat -->
+  @if (!isLoading && filteredProducts.length === 0) {
+  <div class="empty-state">
+    <span class="empty-icon">🔍</span>
+    <h3>Aucun produit trouvé</h3>
+    <p>Essayez de modifier vos critères de recherche</p>
+    <button class="btn-primary" (click)="resetFilters()">
+      Voir tous les produits
+    </button>
+  </div>
+  }
+
+</div>
 </div>

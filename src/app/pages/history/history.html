@@ -1,0 +1,96 @@
+<!-- src/app/pages/history/history.html -->
+
+<div class="history-page">
+  <div class="container">
+
+    <div class="page-header">
+      <div class="header-left">
+        <h1>🕐 <span class="gradient-text">Historique</span></h1>
+        @if (historyItems.length > 0) {
+          <span class="count-badge">
+            {{ historyItems.length }} produit(s) consulté(s)
+          </span>
+        }
+      </div>
+      @if (historyItems.length > 0) {
+        <button class="btn-clear-all" (click)="clearAll()">
+          🗑️ Effacer l'historique
+        </button>
+      }
+    </div>
+
+    @if (historyItems.length === 0) {
+      <div class="empty-state">
+        <span class="empty-icon">🕐</span>
+        <h2>Aucun produit consulté</h2>
+        <p>Les produits que vous consultez apparaîtront ici.</p>
+        <a routerLink="/products" class="btn-primary">
+          🛍️ Explorer les produits
+        </a>
+      </div>
+    } @else {
+      <div class="history-list">
+        @for (product of historyItems; track product.id) {
+          <div class="history-item">
+
+            <div class="item-image-wrapper">
+              <img [src]="product.image" [alt]="product.name"
+                   class="item-image" />
+            </div>
+
+            <div class="item-details">
+              <span class="item-category">{{ product.category }}</span>
+              <h3 class="item-name">{{ product.name }}</h3>
+              <p class="item-desc">{{ product.description }}</p>
+              <div class="item-price">
+                <span class="price-current">{{ product.price }}€</span>
+                @if (product.oldPrice) {
+                  <span class="price-old">{{ product.oldPrice }}€</span>
+                  <span class="price-discount">
+                    -{{ getDiscount(product.price, product.oldPrice) }}%
+                  </span>
+                }
+              </div>
+            </div>
+
+            <div class="item-actions">
+              <!-- Favori -->
+              <button class="fav-btn"
+                      (click)="toggleFavorite(product)"
+                      [class.active]="isFavorite(product.id)"
+                      title="Ajouter aux favoris">
+                {{ isFavorite(product.id) ? '❤️' : '🤍' }}
+              </button>
+
+              <!-- Voir détail -->
+              <a [routerLink]="['/products', product.id]"
+                 class="view-btn">
+                👁️ Voir
+              </a>
+
+              <!-- Ajouter au panier -->
+              <button class="cart-btn"
+                      (click)="addToCart(product)"
+                      [class.added]="addedProductId === product.id">
+                @if (addedProductId !== product.id) {
+                  <span>🛒 Ajouter</span>
+                } @else {
+                  <span>✅ Ajouté</span>
+                }
+              </button>
+
+              <!-- Supprimer de l'historique -->
+              <button class="remove-btn"
+                      (click)="removeItem(product.id)"
+                      title="Supprimer">
+                ✕
+              </button>
+            </div>
+
+          </div>
+        }
+      </div>
+    }
+
+  </div>
+</div>

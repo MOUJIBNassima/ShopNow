@@ -38,7 +38,7 @@ export class AuthService {
 
   // ─── Inscription ───────────────────────────────────────────────────────────
   register(firstName: string, lastName: string,
-           email: string, password: string): boolean {
+    email: string, password: string): boolean {
 
     const users = this.getUsers();
 
@@ -48,13 +48,13 @@ export class AuthService {
 
     // Créer le nouvel utilisateur
     const newUser: User = {
-      id: Date.now(), // ID unique basé sur le timestamp
+      id: Date.now(),
       firstName,
       lastName,
       email,
-      password // ⚠️ En prod, on hasherait le mot de passe !
+      password,
+      createdAt: new Date().toISOString()   // ← ligne ajoutée
     };
-
     // Sauvegarder dans la liste des utilisateurs
     users.push(newUser);
     localStorage.setItem(this.usersKey, JSON.stringify(users));

@@ -1,0 +1,91 @@
+<!-- src/app/pages/favorites/favorites.html -->
+
+<div class="favorites-page">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="page-header">
+      <div class="header-left">
+        <h1>Mes <span class="gradient-text">Favoris</span></h1>
+        @if (favorites.length > 0) {
+          <span class="count-badge">{{ favorites.length }} produit(s)</span>
+        }
+      </div>
+      @if (favorites.length > 0) {
+        <button class="btn-clear-all" (click)="clearAll()">
+          🗑️ Tout supprimer
+        </button>
+      }
+    </div>
+
+    <!-- Vide -->
+    @if (favorites.length === 0) {
+      <div class="empty-state">
+        <span class="empty-icon">❤️</span>
+        <h2>Aucun favori pour le moment</h2>
+        <p>Explorez nos produits et ajoutez vos coups de cœur !</p>
+        <a routerLink="/products" class="btn-primary">
+          🛍️ Découvrir les produits
+        </a>
+      </div>
+    } @else {
+      <div class="favorites-grid">
+        @for (product of favorites; track product.id) {
+          <div class="product-card">
+
+            @if (product.badge) {
+              <div class="product-badge">{{ product.badge }}</div>
+            }
+
+            <!-- Bouton retirer favori -->
+            <button class="remove-fav-btn"
+                    (click)="removeFromFavorites(product.id)"
+                    title="Retirer des favoris">
+              ❤️
+            </button>
+
+            <div class="product-image-wrapper">
+              <img [src]="product.image" [alt]="product.name"
+                   class="product-image" />
+              <div class="product-overlay">
+                <a [routerLink]="['/products', product.id]"
+                   class="overlay-btn">👁️ Voir</a>
+              </div>
+            </div>
+
+            <div class="product-info">
+              <span class="product-category">{{ product.category }}</span>
+              <h3 class="product-name">{{ product.name }}</h3>
+
+              <div class="product-price">
+                <span class="price-current">{{ product.price }}€</span>
+                @if (product.oldPrice) {
+                  <span class="price-old">{{ product.oldPrice }}€</span>
+                  <span class="price-discount">
+                    -{{ getDiscount(product.price, product.oldPrice) }}%
+                  </span>
+                }
+              </div>
+
+              <div class="card-actions">
+                <button class="add-to-cart-btn"
+                        (click)="addToCart(product)"
+                        [class.added]="addedProductId === product.id">
+                  @if (addedProductId !== product.id) {
+                    <span>🛒 Ajouter</span>
+                  } @else {
+                    <span>✅ Ajouté !</span>
+                  }
+                </button>
+                <a [routerLink]="['/products', product.id]"
+                   class="detail-btn">→</a>
+              </div>
+            </div>
+
+          </div>
+        }
+      </div>
+    }
+
+  </div>
+</div>

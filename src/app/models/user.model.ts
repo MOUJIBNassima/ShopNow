@@ -1,24 +1,37 @@
 // src/app/models/user.model.ts
 
-// Interface pour un utilisateur inscrit
 export interface User {
-  id: number;          // Identifiant unique
-  firstName: string;   // Prénom
-  lastName: string;    // Nom de famille
-  email: string;       // Email (utilisé pour la connexion)
-  password: string;    // Mot de passe (stocké dans localStorage)
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
+  country?: string;
+  createdAt: string;       // Date d'inscription
 }
 
-// Interface pour l'ordre/commande
+export interface OrderItem {
+  productId: number;
+  productName: string;
+  productImage: string;
+  quantity: number;
+  unitPrice: number;
+  total: number;
+}
+
 export interface Order {
-  id: number;
+  id: string;
   userId: number;
-  items: {
-    productName: string;
-    quantity: number;
-    price: number;
-  }[];
+  items: OrderItem[];
+  subtotal: number;
+  shipping: number;
   total: number;
   date: string;
-  status: string;
+  status: 'En cours' | 'Livrée' | 'Annulée';
+  shippingAddress: string;
+  paymentMethod: string;
 }

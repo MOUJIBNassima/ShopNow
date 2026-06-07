@@ -454,3 +454,100 @@
   .similar-grid { grid-template-columns: 1fr; }
   .action-buttons { flex-direction: column; }
 }
+
+/* Bouton favori */
+.btn-favorite {
+  width: 100%;
+  padding: 0.8rem;
+  background: white;
+  color: #6b7280;
+  border: 2px solid #e5e7eb;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.8rem;
+}
+
+.btn-favorite:hover {
+  border-color: #fecdd3;
+  color: #ef4444;
+  background: #fff1f2;
+}
+
+.btn-favorite.active {
+  border-color: #fecdd3;
+  background: #fff1f2;
+  color: #ef4444;
+}
+
+/* ─── Alerte connexion requise ───────────────────────────────────────────── */
+.login-alert {
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a2e;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  z-index: 9999;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  animation: slideDown 0.3s ease;
+  overflow: hidden;
+  min-width: 320px;
+  justify-content: center;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Barre de progression qui indique le délai avant redirection */
+.alert-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #6C63FF, #A855F7);
+  border-radius: 0 0 14px 14px;
+  animation: shrink 1.5s linear forwards;
+}
+
+@keyframes shrink {
+  from { width: 100%; }
+  to   { width: 0%; }
+}
+/* ─── Bouton favori overlay sur l'image ─────────────────────────────────── */
+.fav-btn-overlay {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 2px solid #e5e7eb;
+  background: white;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 2;
+}
+
+.fav-btn-overlay:hover,
+.fav-btn-overlay.active {
+  border-color: #fecdd3;
+  background: #fff1f2;
+  transform: scale(1.1);
+}

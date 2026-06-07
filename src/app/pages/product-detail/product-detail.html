@@ -3,7 +3,6 @@
 <div class="detail-page">
   <div class="container">
 
-    <!-- ✅ Nouvelle syntaxe @if -->
     @if (isLoading) {
       <div class="loading-wrapper">
         <div class="spinner"></div>
@@ -33,6 +32,13 @@
         <span class="current">{{ product.name }}</span>
       </div>
 
+      <!-- Alerte connexion requise -->
+      @if (showLoginAlert) {
+        <div class="login-alert">
+          🔐 Connectez-vous pour ajouter aux favoris…
+        </div>
+      }
+
       <!-- Détail principal -->
       <div class="product-detail-grid">
 
@@ -50,6 +56,15 @@
                 -{{ getDiscount(product.price, product.oldPrice) }}%
               </div>
             }
+
+            <!-- ─── Bouton Favori (sur l'image) ───────────────────────── -->
+            <button class="fav-btn-overlay"
+                    (click)="toggleFavorite()"
+                    [class.active]="isFav"
+                    [title]="isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'">
+              {{ isFav ? '❤️' : '🤍' }}
+            </button>
+
           </div>
         </div>
 
@@ -125,7 +140,7 @@
             </div>
           }
 
-          <!-- Boutons -->
+          <!-- Boutons principaux -->
           <div class="action-buttons">
             <button class="btn-cart"
                     (click)="addToCart()"
@@ -136,6 +151,13 @@
               ⚡ Acheter maintenant
             </button>
           </div>
+
+          <!-- ─── Bouton Favori (dans la section info) ─────────────────── -->
+          <button class="btn-favorite"
+                  (click)="toggleFavorite()"
+                  [class.active]="isFav">
+            {{ isFav ? '❤️ Retirer des favoris' : '🤍 Ajouter aux favoris' }}
+          </button>
 
           <!-- Garanties -->
           <div class="guarantees">

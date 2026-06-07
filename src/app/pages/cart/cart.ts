@@ -2,14 +2,14 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';       // ✅ Correction : RouterLink ajouté
+import { RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart';
 import { CartItem } from '../../models/cart-item.model';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, RouterLink],              // ✅ Correction : RouterLink dans imports
+  imports: [CommonModule, RouterLink],
   templateUrl: './cart.html',
   styleUrl: './cart.css'
 })
@@ -19,7 +19,7 @@ export class Cart implements OnInit {
   shippingFee: number = 5.99;
   freeShippingThreshold: number = 50;
 
-  // ✅ Correction : constructor AVANT ngOnInit
+  // Correction : constructor AVANT ngOnInit
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {

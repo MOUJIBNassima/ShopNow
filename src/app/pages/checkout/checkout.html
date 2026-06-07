@@ -25,7 +25,6 @@
       </div>
     </div>
 
-    <!-- ✅ Nouvelle syntaxe @if / @else -->
     @if (!orderSuccess) {
 
       <!-- ═══ ÉTAPE 1 : Formulaire ════════════════════════════════════ -->
@@ -154,19 +153,19 @@
                   </label>
 
                   <label class="payment-option"
+                         [class.selected]="paymentMethod.value === 'paypal'">
+                    <input type="radio" formControlName="paymentMethod"
+                           value="paypal" />
+                    <span class="payment-icon">🅿️</span>
+                    <span>PayPal</span>
+                  </label>
+
+                  <label class="payment-option"
                          [class.selected]="paymentMethod.value === 'cash'">
                     <input type="radio" formControlName="paymentMethod"
                            value="cash" />
                     <span class="payment-icon">💵</span>
                     <span>Paiement à la livraison</span>
-                  </label>
-
-                  <label class="payment-option"
-                         [class.selected]="paymentMethod.value === 'transfer'">
-                    <input type="radio" formControlName="paymentMethod"
-                           value="transfer" />
-                    <span class="payment-icon">🏦</span>
-                    <span>Virement bancaire</span>
                   </label>
 
                 </div>
@@ -186,7 +185,6 @@
             <div class="summary-card">
               <h3>Récapitulatif</h3>
 
-              <!-- ✅ Nouvelle syntaxe @for -->
               <div class="summary-items">
                 @for (item of cartItems; track item.product.id) {
                   <div class="summary-item">
@@ -262,9 +260,14 @@
               <span>Email de confirmation envoyé</span>
             </div>
           </div>
-          <button class="btn-home" (click)="goHome()">
-            🏠 Retour à l'accueil
-          </button>
+          <div class="success-actions">
+            <button class="btn-account" (click)="goToAccount()">
+              👤 Voir mes commandes
+            </button>
+            <button class="btn-home" (click)="goHome()">
+              🏠 Retour à l'accueil
+            </button>
+          </div>
         </div>
       </div>
 

@@ -13,27 +13,20 @@
     <ul class="nav-links" [class.open]="isMenuOpen">
 
       <li>
-        <a routerLink="/"
-           routerLinkActive="active"
-           [routerLinkActiveOptions]="{exact: true}"
-           (click)="closeMenu()">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMenu()">
           Accueil
         </a>
       </li>
 
       <li>
-        <a routerLink="/products"
-           routerLinkActive="active"
-           (click)="closeMenu()">
+        <a routerLink="/products" routerLinkActive="active" (click)="closeMenu()">
           Produits
         </a>
       </li>
 
       <!-- Liens visibles uniquement sur mobile -->
       <li class="mobile-only">
-        <a routerLink="/cart"
-           routerLinkActive="active"
-           (click)="closeMenu()">
+        <a routerLink="/cart" routerLinkActive="active" (click)="closeMenu()">
           Panier
           <span class="badge-mobile" *ngIf="cartCount > 0">
             {{ cartCount }}
@@ -58,16 +51,12 @@
       <!-- Si non connecté → Login / Register -->
       <ng-template #guestLinks>
         <li class="mobile-only">
-          <a routerLink="/login"
-             routerLinkActive="active"
-             (click)="closeMenu()">
+          <a routerLink="/login" routerLinkActive="active" (click)="closeMenu()">
             Connexion
           </a>
         </li>
         <li class="mobile-only">
-          <a routerLink="/register"
-             routerLinkActive="active"
-             (click)="closeMenu()">
+          <a routerLink="/register" routerLinkActive="active" (click)="closeMenu()">
             Inscription
           </a>
         </li>
@@ -84,6 +73,18 @@
         <span class="cart-badge" *ngIf="cartCount > 0">
           {{ cartCount }}
         </span>
+      </a>
+
+      <!-- Après le bouton panier, dans nav-actions -->
+      <a routerLink="/favorites" class="fav-nav-btn">
+        <span>❤️</span>
+        @if (favCount > 0) {
+        <span class="cart-badge">{{ favCount }}</span>
+        }
+      </a>
+
+      <a routerLink="/history" class="hist-nav-btn" title="Historique">
+        🕐
       </a>
 
       <!-- Si connecté -->
@@ -105,8 +106,7 @@
     </div>
 
     <!-- ─── Bouton hamburger (mobile) ─────────────────────────────────────── -->
-    <button class="hamburger" (click)="toggleMenu()"
-            [class.active]="isMenuOpen">
+    <button class="hamburger" (click)="toggleMenu()" [class.active]="isMenuOpen">
       <span></span>
       <span></span>
       <span></span>

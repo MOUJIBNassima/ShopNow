@@ -491,3 +491,293 @@
   .sort-select { width: 100%; }
   .page-hero h1 { font-size: 1.8rem; }
 }
+
+/* ─── Bouton filtres avancés ──────────────────────────────────────────────── */
+.btn-advanced-filters {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.2rem;
+  border: 2px solid rgba(108, 99, 255, 0.15);
+  border-radius: 14px;
+  background: white;
+  color: #4a4a6a;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-advanced-filters:hover,
+.btn-advanced-filters.active {
+  border-color: #6C63FF;
+  color: #6C63FF;
+  background: rgba(108, 99, 255, 0.05);
+}
+
+.filters-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  background: #A855F7;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* ─── Panneau filtres avancés ─────────────────────────────────────────────── */
+.advanced-filters-panel {
+  background: white;
+  border-radius: 20px;
+  padding: 1.8rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 20px rgba(108, 99, 255, 0.08);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  animation: fadeInUp 0.3s ease;
+  border: 1px solid rgba(108, 99, 255, 0.08);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.filter-group { display: flex; flex-direction: column; gap: 0.8rem; }
+
+.filter-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #374151;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+/* Fourchette de prix */
+.price-range { display: flex; flex-direction: column; gap: 0.8rem; }
+
+.price-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.price-input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.5rem 0.8rem;
+  transition: border-color 0.2s;
+  flex: 1;
+}
+
+.price-input-group:focus-within {
+  border-color: #6C63FF;
+  background: white;
+}
+
+.price-input-group label {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.price-input-group span {
+  font-size: 0.85rem;
+  color: #6C63FF;
+  font-weight: 700;
+}
+
+.price-input {
+  width: 70px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.price-separator {
+  color: #9ca3af;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.price-display {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+/* Filtre rating */
+.rating-filter {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.rating-btn {
+  padding: 0.4rem 0.9rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 20px;
+  background: white;
+  color: #4a4a6a;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rating-btn:hover  { border-color: #6C63FF; color: #6C63FF; }
+.rating-btn.active {
+  background: linear-gradient(135deg, #6C63FF, #A855F7);
+  border-color: transparent;
+  color: white;
+}
+
+/* Filtre badge */
+.badge-filter { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.badge-btn {
+  padding: 0.4rem 0.9rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 20px;
+  background: white;
+  color: #4a4a6a;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.badge-btn:hover  { border-color: #A855F7; color: #A855F7; }
+.badge-btn.active {
+  background: linear-gradient(135deg, #A855F7, #C084FC);
+  border-color: transparent;
+  color: white;
+}
+
+/* Toggle stock */
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.toggle-label input[type="checkbox"] { display: none; }
+
+.toggle-switch {
+  width: 44px;
+  height: 24px;
+  background: #e5e7eb;
+  border-radius: 12px;
+  position: relative;
+  transition: background 0.3s ease;
+  flex-shrink: 0;
+}
+
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.toggle-label input:checked + .toggle-switch {
+  background: linear-gradient(135deg, #6C63FF, #A855F7);
+}
+
+.toggle-label input:checked + .toggle-switch::after {
+  transform: translateX(20px);
+}
+
+/* Bouton favori sur carte produit */
+.fav-btn {
+  position: absolute;
+  top: 42px;
+  right: 10px;
+  z-index: 3;
+  background: white;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fav-btn:hover { transform: scale(1.15); }
+.fav-btn.active { box-shadow: 0 2px 8px rgba(239,68,68,0.25); }
+
+@media (max-width: 768px) {
+  .advanced-filters-panel { grid-template-columns: 1fr; }
+}
+
+/* ─── Alerte connexion requise ───────────────────────────────────────────── */
+.login-alert {
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a2e;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  z-index: 9999;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  animation: slideDown 0.3s ease;
+  overflow: hidden;
+  min-width: 320px;
+  justify-content: center;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Barre de progression qui indique le délai avant redirection */
+.alert-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #6C63FF, #A855F7);
+  border-radius: 0 0 14px 14px;
+  animation: shrink 1.5s linear forwards;
+}
+
+@keyframes shrink {
+  from { width: 100%; }
+  to   { width: 0%; }
+}

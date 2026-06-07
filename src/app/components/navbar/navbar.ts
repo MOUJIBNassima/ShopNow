@@ -7,6 +7,7 @@ import { CartService } from '../../services/cart';
 import { AuthService } from '../../services/auth';
 import { User } from '../../models/user.model';
 import { Router } from '@angular/router';
+import { FavoritesService } from '../../services/favorites';
 
 @Component({
   selector: 'app-navbar',
@@ -29,9 +30,12 @@ export class Navbar implements OnInit {
   // Navbar avec fond (après scroll)
   isScrolled: boolean = false;
 
+  favCount: number = 0;
+
   constructor(
     private cartService: CartService,
     private authService: AuthService,
+    private favoritesService: FavoritesService,
     private router: Router
   ) { }
 
@@ -45,6 +49,10 @@ export class Navbar implements OnInit {
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
     });
+
+    this.favoritesService.favorites$.subscribe(() => {
+      this.favCount = this.favoritesService.getFavoritesCount();
+});
   }
 
   // Détecter le scroll pour changer le style de la navbar

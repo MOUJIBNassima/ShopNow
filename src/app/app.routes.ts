@@ -3,7 +3,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth-guard';
 
-// Importation de tous les composants/pages
 import { Home } from './pages/home/home';
 import { Products } from './pages/products/products';
 import { ProductDetail } from './pages/product-detail/product-detail';
@@ -11,6 +10,9 @@ import { Cart } from './pages/cart/cart';
 import { Checkout } from './pages/checkout/checkout';
 import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
+import { FavoritesComponent } from './pages/favorites/favorites';
+import { HistoryComponent } from './pages/history/history';
+import { AccountComponent } from './pages/account/account';
 
 export const routes: Routes = [
 
@@ -28,7 +30,7 @@ export const routes: Routes = [
     title: 'ShopNow — Produits'
   },
 
-  // ─── Détail d'un produit (route avec paramètre :id) ───────────────────────
+  // ─── Détail d'un produit ──────────────────────────────────────────────────
   {
     path: 'products/:id',
     component: ProductDetail,
@@ -42,12 +44,35 @@ export const routes: Routes = [
     title: 'ShopNow — Panier'
   },
 
-  // ─── Checkout (protégé : faut être connecté) ──────────────────────────────
+  // ─── Checkout (protégé) ───────────────────────────────────────────────────
   {
     path: 'checkout',
     component: Checkout,
     title: 'ShopNow — Commande',
-    canActivate: [authGuard]   // ← Guard : redirige vers login si non connecté
+    canActivate: [authGuard]
+  },
+
+  // ─── Favoris ──────────────────────────────────────────────────────────────
+  {
+    path: 'favorites',
+    component: FavoritesComponent,
+    title: 'ShopNow — Favoris',
+    canActivate: [authGuard]
+  },
+
+  // ─── Historique de navigation ─────────────────────────────────────────────
+  {
+    path: 'history',
+    component: HistoryComponent,
+    title: 'ShopNow — Historique'
+  },
+
+  // ─── Mon Compte (protégé) ─────────────────────────────────────────────────
+  {
+    path: 'account',
+    component: AccountComponent,
+    title: 'ShopNow — Mon Compte',
+    canActivate: [authGuard]
   },
 
   // ─── Connexion ────────────────────────────────────────────────────────────
@@ -66,7 +91,7 @@ export const routes: Routes = [
 
   // ─── Redirection si route inconnue ────────────────────────────────────────
   {
-    path: '**',              // ** = toute route qui n'existe pas
+    path: '**',
     redirectTo: '',
     pathMatch: 'full'
   }

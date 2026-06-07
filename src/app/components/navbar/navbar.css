@@ -298,3 +298,22 @@
     font-size: 1rem;
   }
 }
+
+.fav-nav-btn, .hist-nav-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(108, 99, 255, 0.08);
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+}
+
+.fav-nav-btn:hover, .hist-nav-btn:hover {
+  background: rgba(108, 99, 255, 0.15);
+  transform: translateY(-2px);
+}

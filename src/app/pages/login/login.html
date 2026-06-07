@@ -41,7 +41,7 @@
           <a routerLink="/register">Créer un compte</a>
         </p>
 
-        <!-- ✅ Nouvelle syntaxe @if -->
+        <!-- Nouvelle syntaxe @if -->
         @if (errorMessage) {
           <div class="error-alert">
             ❌ {{ errorMessage }}
@@ -65,7 +65,7 @@
               />
             </div>
 
-            <!-- ✅ Nouvelle syntaxe @if imbriqué -->
+            <!-- Nouvelle syntaxe @if imbriqué -->
             @if (email.invalid && email.touched) {
               <div class="field-error">
                 @if (email.errors?.['required']) {

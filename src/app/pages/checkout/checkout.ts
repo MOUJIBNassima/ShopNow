@@ -2,11 +2,12 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder,
          FormGroup, Validators } from '@angular/forms';
 import { CartService } from '../../services/cart';
 import { AuthService } from '../../services/auth';
+import { OrderService } from '../../services/order';
 import { CartItem } from '../../models/cart-item.model';
 
 @Component({
@@ -30,6 +31,7 @@ export class Checkout implements OnInit {
     private fb: FormBuilder,
     private cartService: CartService,
     private authService: AuthService,
+    private orderService: OrderService,
     private router: Router
   ) {
     this.checkoutForm = this.fb.group({
@@ -39,7 +41,7 @@ export class Checkout implements OnInit {
       phone:         ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       address:       ['', [Validators.required, Validators.minLength(5)]],
       city:          ['', [Validators.required]],
-      zipCode:       ['', [Validators.required, Validators.pattern(/^[0-9]{5}$/)]],
+      zipCode:       ['', [Validators.required, Validators.pattern(/^[0-9]{4,5}$/)]],
       country:       ['Maroc', [Validators.required]],
       paymentMethod: ['card', [Validators.required]]
     });
@@ -53,12 +55,16 @@ export class Checkout implements OnInit {
       this.checkoutForm.patchValue({
         firstName: user.firstName,
         lastName:  user.lastName,
-        email:     user.email
+        email:     user.email,
+        phone:     user.phone   || '',
+        address:   user.address || '',
+        city:      user.city    || '',
+        zipCode:   user.zipCode || '',
+        country:   user.country || 'Maroc'
       });
     }
   }
 
-  // ✅ Correction NG8107 : ajout du ! pour garantir non-null
   get firstName()     { return this.checkoutForm.get('firstName')!; }
   get lastName()      { return this.checkoutForm.get('lastName')!; }
   get email()         { return this.checkoutForm.get('email')!; }
@@ -81,11 +87,34 @@ export class Checkout implements OnInit {
       this.checkoutForm.markAllAsTouched();
       return;
     }
-    this.orderNumber = 'SN-' + Date.now().toString().slice(-6).toUpperCase();
+
+    const user = this.authService.getCurrentUser();
+    const f = this.checkoutForm.value;
+    const shippingAddress = `${f.address}, ${f.zipCode} ${f.city}, ${f.country}`;
+    const paymentLabel = f.paymentMethod === 'card' ? 'Carte bancaire' :
+                         f.paymentMethod === 'paypal' ? 'PayPal' : 'Virement';
+
+    // ─── Sauvegarder la commande ────────────────────────────────────────────
+    if (user) {
+      const savedOrder = this.orderService.saveOrder(
+        user.id,
+        this.cartItems,
+        this.getSubtotal(),
+        this.getShipping(),
+        shippingAddress,
+        paymentLabel
+      );
+      this.orderNumber = savedOrder.id;
+    } else {
+      this.orderNumber = 'SN-' + Date.now().toString().slice(-6).toUpperCase();
+    }
+
     this.cartService.clearCart();
     this.orderSuccess = true;
     this.currentStep = 2;
   }
 
   goHome(): void { this.router.navigate(['/']); }
+
+  goToAccount(): void { this.router.navigate(['/account']); }
 }
