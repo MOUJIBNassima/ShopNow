@@ -13,11 +13,12 @@
 
     <!-- ─── Panier vide ────────────────────────────────────────────────── -->
     <div class="empty-cart" *ngIf="cartItems.length === 0">
-      <span class="empty-icon">🛒</span>
+      <span class="material-symbols-rounded empty-icon">shopping_cart</span>
       <h2>Votre panier est vide</h2>
       <p>Découvrez nos produits et commencez votre shopping !</p>
       <a routerLink="/products" class="btn-primary">
-        🛍️ Voir les produits
+        <span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;">shopping_bag</span>
+        Voir les produits
       </a>
     </div>
 
@@ -31,19 +32,18 @@
         <div class="free-shipping-bar">
           <div class="shipping-text">
             <span *ngIf="getRemainingForFreeShipping() > 0">
-              🚚 Plus que
+              <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">local_shipping</span>
+              Plus que
               <strong>{{ getRemainingForFreeShipping().toFixed(2) }} DH</strong>
               pour la livraison gratuite !
             </span>
-            <span *ngIf="getRemainingForFreeShipping() === 0"
-                  class="free-shipping-achieved">
-              🎉 Vous bénéficiez de la livraison gratuite !
+            <span *ngIf="getRemainingForFreeShipping() === 0" class="free-shipping-achieved">
+              <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">celebration</span>
+              Vous bénéficiez de la livraison gratuite !
             </span>
           </div>
           <div class="progress-bar">
-            <div class="progress-fill"
-                 [style.width.%]="getShippingProgress()">
-            </div>
+            <div class="progress-fill" [style.width.%]="getShippingProgress()"></div>
           </div>
         </div>
 
@@ -52,46 +52,29 @@
 
           <!-- Image -->
           <div class="item-image-wrapper">
-            <img [src]="item.product.image"
-                 [alt]="item.product.name"
-                 class="item-image" />
+            <img [src]="item.product.image" [alt]="item.product.name" class="item-image" />
           </div>
 
           <!-- Infos article -->
           <div class="item-details">
-            <span class="item-category">
-              {{ item.product.category }}
-            </span>
+            <span class="item-category">{{ item.product.category }}</span>
             <h3 class="item-name">{{ item.product.name }}</h3>
-            <span class="item-unit-price">
-              Prix unitaire : {{ item.product.price }} DH
-            </span>
+            <span class="item-unit-price">Prix unitaire : {{ item.product.price }} DH</span>
           </div>
 
           <!-- Quantité -->
           <div class="item-quantity">
-            <button class="qty-btn"
-                    (click)="decrease(item.product.id, item.quantity)"
-                    [disabled]="item.quantity <= 1">
-              −
-            </button>
+            <button class="qty-btn" (click)="decrease(item.product.id, item.quantity)" [disabled]="item.quantity <= 1">−</button>
             <span class="qty-value">{{ item.quantity }}</span>
-            <button class="qty-btn"
-                    (click)="increase(item.product.id, item.quantity)">
-              +
-            </button>
+            <button class="qty-btn" (click)="increase(item.product.id, item.quantity)">+</button>
           </div>
 
           <!-- Prix total ligne -->
-          <div class="item-total">
-            {{ (item.product.price * item.quantity).toFixed(2) }} DH
-          </div>
+          <div class="item-total">{{ (item.product.price * item.quantity).toFixed(2) }} DH</div>
 
           <!-- Supprimer -->
-          <button class="remove-btn"
-                  (click)="remove(item.product.id)"
-                  title="Supprimer">
-            🗑️
+          <button class="remove-btn" (click)="remove(item.product.id)" title="Supprimer">
+            <span class="material-symbols-rounded">delete</span>
           </button>
 
         </div>
@@ -99,10 +82,12 @@
         <!-- Actions bas de liste -->
         <div class="cart-actions">
           <a routerLink="/products" class="btn-continue">
-            ← Continuer mes achats
+            <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">arrow_back</span>
+            Continuer mes achats
           </a>
           <button class="btn-clear" (click)="clearCart()">
-            🗑️ Vider le panier
+            <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">delete_sweep</span>
+            Vider le panier
           </button>
         </div>
 
@@ -119,11 +104,10 @@
           </div>
           <div class="summary-line">
             <span>Livraison</span>
-            <span *ngIf="getShipping() > 0">
-              {{ getShipping().toFixed(2) }} DH
-            </span>
+            <span *ngIf="getShipping() > 0">{{ getShipping().toFixed(2) }} DH</span>
             <span *ngIf="getShipping() === 0" class="free-label">
-              Gratuite 🎉
+              Gratuite
+              <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">celebration</span>
             </span>
           </div>
           <div class="summary-line summary-total">
@@ -134,14 +118,15 @@
 
         <!-- Bouton commander -->
         <a routerLink="/checkout" class="btn-checkout">
-          Passer la commande →
+          Passer la commande
+          <span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;">arrow_forward</span>
         </a>
 
         <!-- Paiements acceptés -->
         <div class="payment-icons">
-          <span>💳</span>
-          <span>🏦</span>
-          <span>📱</span>
+          <span class="material-symbols-rounded">credit_card</span>
+          <span class="material-symbols-rounded">account_balance</span>
+          <span class="material-symbols-rounded">phone_android</span>
           <span class="payment-text">Paiement 100% sécurisé</span>
         </div>
 

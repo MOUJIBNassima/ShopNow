@@ -5,7 +5,7 @@
 
     <!-- ─── Logo ─────────────────────────────────────────────────────────── -->
     <a routerLink="/" class="nav-logo" (click)="closeMenu()">
-      <span class="logo-icon">🛍️</span>
+      <span class="material-symbols-rounded logo-icon">shopping_bag</span>
       <span class="logo-text">Shop<span class="logo-accent">Now</span></span>
     </a>
 
@@ -38,7 +38,8 @@
       <ng-container *ngIf="currentUser; else guestLinks">
         <li class="mobile-only">
           <span class="user-greeting-mobile">
-            👋 {{ currentUser.firstName }}
+            <span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;">waving_hand</span>
+            {{ currentUser.firstName }}
           </span>
         </li>
         <li class="mobile-only">
@@ -74,28 +75,32 @@
 
       <!-- Bouton panier avec badge -->
       <a routerLink="/cart" class="cart-btn">
-        <span class="cart-icon">🛒</span>
+        <span class="material-symbols-rounded cart-icon">shopping_cart</span>
         <span class="cart-badge" *ngIf="cartCount > 0">
           {{ cartCount }}
         </span>
       </a>
 
-      <!-- Après le bouton panier, dans nav-actions -->
+      <!-- Favoris -->
       <a routerLink="/favorites" class="fav-nav-btn">
-        <span>❤️</span>
+        <span class="material-symbols-rounded">favorite</span>
         @if (favCount > 0) {
-        <span class="cart-badge">{{ favCount }}</span>
+          <span class="cart-badge">{{ favCount }}</span>
         }
       </a>
 
+      <!-- Historique -->
       <a routerLink="/history" class="hist-nav-btn" title="Historique">
-        🕐
+        <span class="material-symbols-rounded">history</span>
       </a>
 
       <!-- Si connecté -->
       <ng-container *ngIf="currentUser; else authButtons">
         <div class="user-menu">
-          <span class="user-name">👋 {{ currentUser.firstName }}</span>
+          <span class="user-name">
+            <span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;">waving_hand</span>
+            {{ currentUser.firstName }}
+          </span>
           <a routerLink="/account" class="btn-account">Mon Compte</a>
           <button class="logout-btn" (click)="logout()">
             Déconnexion

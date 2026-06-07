@@ -248,3 +248,31 @@
   .history-item { grid-template-columns: 80px 1fr; }
   .item-actions { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; }
 }
+/* ─── Bouton favori visiteur ─────────────────────────────────────────── */
+.fav-btn {
+  position: relative;
+}
+
+.fav-btn.guest {
+  opacity: 0.55;
+  cursor: pointer;
+}
+
+.fav-btn.guest:hover {
+  opacity: 0.8;
+}
+
+.lock-hint {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #6b7280;
+  color: #fff;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}

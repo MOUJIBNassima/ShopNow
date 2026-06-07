@@ -6,20 +6,20 @@
     <!-- Côté visuel -->
     <div class="auth-visual">
       <div class="visual-content">
-        <span class="visual-logo">🛍️</span>
+        <span class="material-symbols-rounded visual-logo">shopping_bag</span>
         <h2>Rejoignez<br><strong>ShopNow</strong></h2>
         <p>Créez votre compte gratuit et profitez d'une expérience shopping personnalisée.</p>
         <div class="visual-features">
           <div class="visual-feature">
-            <span>🎁</span>
+            <span class="material-symbols-rounded">card_giftcard</span>
             <span>10% de réduction à l'inscription</span>
           </div>
           <div class="visual-feature">
-            <span>🚚</span>
+            <span class="material-symbols-rounded">local_shipping</span>
             <span>Livraison gratuite dès 500 DH</span>
           </div>
           <div class="visual-feature">
-            <span>⭐</span>
+            <span class="material-symbols-rounded" style="color:#f59e0b;">star</span>
             <span>Programme de fidélité exclusif</span>
           </div>
         </div>
@@ -31,7 +31,7 @@
       <div class="auth-form-wrapper">
 
         <div class="mobile-logo">
-          <span>🛍️</span><span>ShopNow</span>
+          <span class="material-symbols-rounded">shopping_bag</span><span>ShopNow</span>
         </div>
 
         <h1 class="form-title">Créer un compte</h1>
@@ -42,7 +42,7 @@
 
         <!-- ✅ Nouvelle syntaxe @if -->
         @if (errorMessage) {
-          <div class="error-alert">❌ {{ errorMessage }}</div>
+          <div class="error-alert"><span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">cancel</span> {{ errorMessage }}</div>
         }
 
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
@@ -55,7 +55,7 @@
               <div class="input-wrapper"
                    [class.error]="firstName.invalid && firstName.touched"
                    [class.success]="firstName.valid && firstName.touched">
-                <span class="input-icon">👤</span>
+                <span class="material-symbols-rounded input-icon">person</span>
                 <input type="text" formControlName="firstName"
                        placeholder="Prénom" class="form-input" />
               </div>
@@ -76,7 +76,7 @@
               <div class="input-wrapper"
                    [class.error]="lastName.invalid && lastName.touched"
                    [class.success]="lastName.valid && lastName.touched">
-                <span class="input-icon">👤</span>
+                <span class="material-symbols-rounded input-icon">person</span>
                 <input type="text" formControlName="lastName"
                        placeholder="Nom" class="form-input" />
               </div>
@@ -100,7 +100,7 @@
             <div class="input-wrapper"
                  [class.error]="email.invalid && email.touched"
                  [class.success]="email.valid && email.touched">
-              <span class="input-icon">✉️</span>
+              <span class="material-symbols-rounded input-icon">mail</span>
               <input type="email" formControlName="email"
                      placeholder="exemple@email.com" class="form-input" />
             </div>
@@ -122,14 +122,14 @@
             <div class="input-wrapper"
                  [class.error]="password.invalid && password.touched"
                  [class.success]="password.valid && password.touched">
-              <span class="input-icon">🔒</span>
+              <span class="material-symbols-rounded input-icon">lock</span>
               <input [type]="showPassword ? 'text' : 'password'"
                      formControlName="password"
                      placeholder="Min. 6 caractères"
                      class="form-input" />
               <button type="button" class="toggle-password"
                       (click)="togglePassword()">
-                {{ showPassword ? '🙈' : '👁️' }}
+                <span class="material-symbols-rounded">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
               </button>
             </div>
             @if (password.invalid && password.touched) {
@@ -150,14 +150,14 @@
             <div class="input-wrapper"
                  [class.error]="confirm.invalid && confirm.touched"
                  [class.success]="confirm.valid && confirm.touched">
-              <span class="input-icon">🔒</span>
+              <span class="material-symbols-rounded input-icon">lock</span>
               <input [type]="showConfirm ? 'text' : 'password'"
                      formControlName="confirm"
                      placeholder="Répétez le mot de passe"
                      class="form-input" />
               <button type="button" class="toggle-password"
                       (click)="toggleConfirm()">
-                {{ showConfirm ? '🙈' : '👁️' }}
+                <span class="material-symbols-rounded">{{ showConfirm ? 'visibility_off' : 'visibility' }}</span>
               </button>
             </div>
             @if (confirm.invalid && confirm.touched) {

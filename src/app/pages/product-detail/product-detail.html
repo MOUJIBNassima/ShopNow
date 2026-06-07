@@ -12,7 +12,7 @@
 
     @if (notFound) {
       <div class="not-found">
-        <span>😕</span>
+        <span class="material-symbols-rounded" style="font-size:48px;">sentiment_dissatisfied</span>
         <h2>Produit introuvable</h2>
         <p>Ce produit n'existe pas ou a été supprimé.</p>
         <a routerLink="/products" class="btn-primary">
@@ -35,7 +35,7 @@
       <!-- Alerte connexion requise -->
       @if (showLoginAlert) {
         <div class="login-alert">
-          🔐 Connectez-vous pour ajouter aux favoris…
+          <span class="material-symbols-rounded" style="font-size:14px;vertical-align:middle;">lock</span> Connectez-vous pour ajouter aux favoris…
         </div>
       }
 
@@ -62,7 +62,7 @@
                     (click)="toggleFavorite()"
                     [class.active]="isFav"
                     [title]="isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'">
-              {{ isFav ? '❤️' : '🤍' }}
+              <span class="material-symbols-rounded">{{ isFav ? 'favorite' : 'favorite_border' }}</span>
             </button>-->
 
           </div>
@@ -74,7 +74,7 @@
           <div class="product-meta">
             <span class="category-tag">{{ product.category }}</span>
             @if (product.stock <= 5) {
-              <span class="stock-tag">🔥 Stock limité</span>
+              <span class="stock-tag"><span class="material-symbols-rounded" style="font-size:14px;vertical-align:middle;">local_fire_department</span> Stock limité</span>
             }
           </div>
 
@@ -83,10 +83,10 @@
           <div class="rating-row">
             <div class="stars">
               @for (s of getStars(product.rating); track $index) {
-                <span>⭐</span>
+                <span class="material-symbols-rounded" style="font-size:16px;color:#f59e0b;">star</span>
               }
               @for (s of getEmptyStars(product.rating); track $index) {
-                <span class="empty-star">☆</span>
+                <span class="material-symbols-rounded" style="font-size:16px;color:#d1d5db;">star</span>
               }
             </div>
             <span class="rating-num">{{ product.rating }}/5</span>
@@ -111,9 +111,9 @@
           <!-- Stock -->
           <div class="stock-info">
             @if (product.stock > 5) {
-              <span class="stock-icon">✅</span>
+              <span class="material-symbols-rounded stock-icon" style="color:#22c55e;">check_circle</span>
             } @else {
-              <span class="stock-icon">⚠️</span>
+              <span class="material-symbols-rounded stock-icon" style="color:#f59e0b;">warning</span>
             }
             <span class="stock-text">
               <strong>{{ product.stock }}</strong> en stock
@@ -145,10 +145,10 @@
             <button class="btn-cart"
                     (click)="addToCart()"
                     [class.added]="isAdded">
-              {{ isAdded ? '✅ Ajouté !' : '🛒 Ajouter au panier' }}
+              <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">{{ isAdded ? 'check_circle' : 'shopping_cart' }}</span>
             </button>
             <button class="btn-buy" (click)="buyNow()">
-              ⚡ Acheter maintenant
+              <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">bolt</span> Acheter maintenant
             </button>
           </div>
 
@@ -156,19 +156,19 @@
           <button class="btn-favorite"
                   (click)="toggleFavorite()"
                   [class.active]="isFav">
-            {{ isFav ? '❤️ Retirer des favoris' : '🤍 Ajouter aux favoris' }}
+            {{ isFav ? 'Retirer des favoris' : 'Ajouter aux favoris' }}
           </button>
 
           <!-- Garanties -->
           <div class="guarantees">
             <div class="guarantee-item">
-              <span>🚚</span><span>Livraison gratuite</span>
+              <span class="material-symbols-rounded">local_shipping</span><span>Livraison gratuite</span>
             </div>
             <div class="guarantee-item">
-              <span>↩️</span><span>Retour 30 jours</span>
+              <span class="material-symbols-rounded">assignment_return</span><span>Retour 30 jours</span>
             </div>
             <div class="guarantee-item">
-              <span>🔒</span><span>Paiement sécurisé</span>
+              <span class="material-symbols-rounded">lock</span><span>Paiement sécurisé</span>
             </div>
           </div>
 

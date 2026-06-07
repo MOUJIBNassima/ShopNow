@@ -26,7 +26,7 @@
           </div>
         </div>
         <button class="logout-btn" (click)="logout()">
-          🚪 Déconnexion
+          <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">logout</span> Déconnexion
         </button>
       </div>
 
@@ -35,12 +35,12 @@
         <button class="tab-btn"
                 [class.active]="activeTab === 'profile'"
                 (click)="setTab('profile')">
-          👤 Mes Informations
+          <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">person</span> Mes Informations
         </button>
         <button class="tab-btn"
                 [class.active]="activeTab === 'orders'"
                 (click)="setTab('orders')">
-          📦 Mes Commandes
+          <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">inventory_2</span> Mes Commandes
           @if (orders.length > 0) {
             <span class="tab-badge">{{ orders.length }}</span>
           }
@@ -53,7 +53,7 @@
 
           @if (saveSuccess) {
             <div class="success-alert">
-              ✅ Profil mis à jour avec succès !
+              <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">check_circle</span> Profil mis à jour avec succès !
             </div>
           }
 
@@ -128,7 +128,7 @@
             <div class="form-actions">
               <button type="submit" class="btn-save"
                       [disabled]="profileForm.invalid">
-                💾 Enregistrer les modifications
+                <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">save</span> Enregistrer les modifications
               </button>
             </div>
 
@@ -142,11 +142,11 @@
 
           @if (orders.length === 0) {
             <div class="empty-orders">
-              <span class="empty-icon">📦</span>
+              <span class="material-symbols-rounded empty-icon">inventory_2</span>
               <h2>Aucune commande pour le moment</h2>
               <p>Vos commandes passées apparaîtront ici après votre premier achat.</p>
               <a routerLink="/products" class="btn-primary">
-                🛍️ Commencer mes achats
+                <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">shopping_bag</span> Commencer mes achats
               </a>
             </div>
           } @else {
@@ -170,7 +170,7 @@
                       </span>
                     </div>
                     <span class="toggle-icon">
-                      {{ expandedOrderId === order.id ? '▲' : '▼' }}
+                      <span class="material-symbols-rounded">{{ expandedOrderId === order.id ? 'expand_less' : 'expand_more' }}</span>
                     </span>
                   </div>
 
@@ -215,11 +215,11 @@
                       <!-- Infos livraison -->
                       <div class="order-shipping-info">
                         <div class="info-row">
-                          <span class="info-label">📍 Adresse :</span>
+                          <span class="material-symbols-rounded info-icon">location_on</span><span class="info-label">Adresse :</span>
                           <span>{{ order.shippingAddress }}</span>
                         </div>
                         <div class="info-row">
-                          <span class="info-label">💳 Paiement :</span>
+                          <span class="material-symbols-rounded info-icon">credit_card</span><span class="info-label">Paiement :</span>
                           <span>{{ order.paymentMethod }}</span>
                         </div>
                       </div>

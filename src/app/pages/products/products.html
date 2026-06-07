@@ -6,7 +6,7 @@
     <div class="container">
       @if (showLoginAlert) {
       <div class="login-alert">
-        <span>🔐</span>
+        <span class="material-symbols-rounded">lock</span>
         <span>Connectez-vous pour ajouter aux favoris...</span>
         <div class="alert-bar"></div>
       </div>
@@ -21,7 +21,7 @@
     <!-- ─── Barre de recherche principale ───────────────────────────────── -->
     <div class="search-bar-wrapper">
       <div class="search-bar">
-        <span class="search-icon">🔍</span>
+        <span class="material-symbols-rounded search-icon">search</span>
         <input type="text" placeholder="Rechercher un produit..." [(ngModel)]="searchQuery" (ngModelChange)="onSearch()"
           class="search-input" />
         @if (searchQuery) {
@@ -42,7 +42,7 @@
       <!-- Bouton filtres avancés -->
       <button class="btn-advanced-filters" (click)="showAdvancedFilters = !showAdvancedFilters"
         [class.active]="showAdvancedFilters">
-        ⚙️ Filtres avancés
+        <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">tune</span> Filtres avancés
         @if (hasActiveFilters()) {
         <span class="filters-dot"></span>
         }
@@ -55,7 +55,7 @@
 
       <!-- Fourchette de prix -->
       <div class="filter-group">
-        <h4 class="filter-title">💰 Fourchette de prix</h4>
+        <h4 class="filter-title"><span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">payments</span> Fourchette de prix</h4>
         <div class="price-range">
           <div class="price-inputs">
             <div class="price-input-group">
@@ -81,7 +81,7 @@
 
       <!-- Note minimum -->
       <div class="filter-group">
-        <h4 class="filter-title">⭐ Note minimum</h4>
+        <h4 class="filter-title"><span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">star</span> Note minimum</h4>
         <div class="rating-filter">
           <button class="rating-btn" [class.active]="minRating === 0" (click)="minRating = 0; onRatingChange()">
             Toutes
@@ -96,7 +96,7 @@
 
       <!-- Badge -->
       <div class="filter-group">
-        <h4 class="filter-title">🏷️ Badge</h4>
+        <h4 class="filter-title"><span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">label</span> Badge</h4>
         <div class="badge-filter">
           @for (badge of badges; track badge) {
           <button class="badge-btn" [class.active]="selectedBadge === badge" (click)="onBadgeChange(badge)">
@@ -108,7 +108,7 @@
 
       <!-- Stock disponible -->
       <!--<div class="filter-group">
-        <h4 class="filter-title">📦 Disponibilité</h4>
+        <h4 class="filter-title"><span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">inventory_2</span> Disponibilité</h4>
         <label class="toggle-label">
           <input type="checkbox" [(ngModel)]="onlyInStock" (ngModelChange)="onStockChange()" />
           <span class="toggle-switch"></span>
@@ -135,7 +135,7 @@
       </span>
       @if (hasActiveFilters()) {
       <button class="reset-btn" (click)="resetFilters()">
-        ↺ Réinitialiser les filtres
+        <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">refresh</span> Réinitialiser les filtres
       </button>
       }
     </div>
@@ -158,21 +158,21 @@
         <div class="product-badge">{{ product.badge }}</div>
         }
 
-        @if (product.stock <= 5) { <div class="low-stock">🔥 Plus que {{ product.stock }} !
+        @if (product.stock <= 5) { <div class="low-stock"><span class="material-symbols-rounded" style="font-size:14px;vertical-align:middle;">local_fire_department</span> Plus que {{ product.stock }} !
       </div>
       }
 
       <!-- Bouton favori -->
       <button class="fav-btn" (click)="toggleFavorite(product)" [class.active]="isFavorite(product.id)"
         title="Ajouter aux favoris">
-        {{ isFavorite(product.id) ? '❤️' : '🤍' }}
+        <span class="material-symbols-rounded">{{ isFavorite(product.id) ? 'favorite' : 'favorite_border' }}</span>
       </button>
 
       <div class="product-image-wrapper">
         <img [src]="product.image" [alt]="product.name" class="product-image" />
         <div class="product-overlay">
           <a [routerLink]="['/products', product.id]" class="overlay-btn">
-            👁️ Voir le détail
+            <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">visibility</span> Voir le détail
           </a>
         </div>
       </div>
@@ -184,7 +184,7 @@
         <div class="product-rating">
           <span class="stars">
             @for (s of getStars(product.rating); track $index) {
-            <span>⭐</span>
+            <span class="material-symbols-rounded" style="font-size:14px;color:#f59e0b;">star</span>
             }
           </span>
           <span class="rating-value">{{ product.rating }}</span>
@@ -206,9 +206,9 @@
         <div class="product-actions">
           <button class="add-to-cart-btn" (click)="addToCart(product)" [class.added]="addedProductId === product.id">
             @if (addedProductId !== product.id) {
-            <span>🛒 Ajouter</span>
+            <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">shopping_cart</span><span>Ajouter</span>
             } @else {
-            <span>✅ Ajouté !</span>
+            <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">check_circle</span><span>Ajouté !</span>
             }
           </button>
           <a [routerLink]="['/products', product.id]" class="detail-btn">→</a>
@@ -223,7 +223,7 @@
   <!-- Aucun résultat -->
   @if (!isLoading && filteredProducts.length === 0) {
   <div class="empty-state">
-    <span class="empty-icon">🔍</span>
+    <span class="material-symbols-rounded empty-icon">search_off</span>
     <h3>Aucun produit trouvé</h3>
     <p>Essayez de modifier vos critères de recherche</p>
     <button class="btn-primary" (click)="resetFilters()">

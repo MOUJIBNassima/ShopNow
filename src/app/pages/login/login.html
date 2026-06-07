@@ -6,20 +6,20 @@
     <!-- ─── Côté gauche : visuel ───────────────────────────────────────── -->
     <div class="auth-visual">
       <div class="visual-content">
-        <span class="visual-logo">🛍️</span>
+        <span class="material-symbols-rounded visual-logo">shopping_bag</span>
         <h2>Bon retour sur<br><strong>ShopNow</strong></h2>
         <p>Connectez-vous pour accéder à votre compte et profiter de nos offres exclusives.</p>
         <div class="visual-features">
           <div class="visual-feature">
-            <span>✅</span>
+            <span class="material-symbols-rounded" style="color:#22c55e;">check_circle</span>
             <span>Accès à votre historique</span>
           </div>
           <div class="visual-feature">
-            <span>✅</span>
+            <span class="material-symbols-rounded" style="color:#22c55e;">check_circle</span>
             <span>Offres personnalisées</span>
           </div>
           <div class="visual-feature">
-            <span>✅</span>
+            <span class="material-symbols-rounded" style="color:#22c55e;">check_circle</span>
             <span>Suivi de commandes</span>
           </div>
         </div>
@@ -31,7 +31,7 @@
       <div class="auth-form-wrapper">
 
         <div class="mobile-logo">
-          <span>🛍️</span>
+          <span class="material-symbols-rounded">shopping_bag</span>
           <span>ShopNow</span>
         </div>
 
@@ -44,7 +44,7 @@
         <!-- Nouvelle syntaxe @if -->
         @if (errorMessage) {
           <div class="error-alert">
-            ❌ {{ errorMessage }}
+            <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">cancel</span> {{ errorMessage }}
           </div>
         }
 
@@ -56,7 +56,7 @@
             <div class="input-wrapper"
                  [class.error]="email.invalid && email.touched"
                  [class.success]="email.valid && email.touched">
-              <span class="input-icon">✉️</span>
+              <span class="material-symbols-rounded input-icon">mail</span>
               <input
                 type="email"
                 formControlName="email"
@@ -84,7 +84,7 @@
             <div class="input-wrapper"
                  [class.error]="password.invalid && password.touched"
                  [class.success]="password.valid && password.touched">
-              <span class="input-icon">🔒</span>
+              <span class="material-symbols-rounded input-icon">lock</span>
               <input
                 [type]="showPassword ? 'text' : 'password'"
                 formControlName="password"
@@ -94,7 +94,7 @@
               <button type="button"
                       class="toggle-password"
                       (click)="togglePassword()">
-                {{ showPassword ? '🙈' : '👁️' }}
+                <span class="material-symbols-rounded">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
               </button>
             </div>
 

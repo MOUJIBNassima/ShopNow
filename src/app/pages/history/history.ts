@@ -2,10 +2,11 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { HistoryService } from '../../services/history';
 import { CartService } from '../../services/cart';
 import { FavoritesService } from '../../services/favorites';
+import { AuthService } from '../../services/auth';
 import { Product } from '../../models/product.model';
 
 @Component({
@@ -19,16 +20,22 @@ export class HistoryComponent implements OnInit {
 
   historyItems: Product[] = [];
   addedProductId: number | null = null;
+  isLoggedIn: boolean = false;
 
   constructor(
     private historyService: HistoryService,
     private cartService: CartService,
-    private favoritesService: FavoritesService
+    private favoritesService: FavoritesService,
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.historyService.history$.subscribe(items => {
       this.historyItems = items;
+    });
+    this.authService.currentUser$.subscribe(user => {
+      this.isLoggedIn = !!user;
     });
   }
 
@@ -47,6 +54,10 @@ export class HistoryComponent implements OnInit {
   }
 
   toggleFavorite(product: Product): void {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
     this.favoritesService.toggleFavorite(product);
   }
 

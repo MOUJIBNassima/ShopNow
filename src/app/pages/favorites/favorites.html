@@ -13,7 +13,7 @@
       </div>
       @if (favorites.length > 0) {
         <button class="btn-clear-all" (click)="clearAll()">
-          🗑️ Tout supprimer
+          <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">delete_sweep</span> Tout supprimer
         </button>
       }
     </div>
@@ -21,11 +21,11 @@
     <!-- Vide -->
     @if (favorites.length === 0) {
       <div class="empty-state">
-        <span class="empty-icon">❤️</span>
+        <span class="material-symbols-rounded empty-icon">favorite</span>
         <h2>Aucun favori pour le moment</h2>
         <p>Explorez nos produits et ajoutez vos coups de cœur !</p>
         <a routerLink="/products" class="btn-primary">
-          🛍️ Découvrir les produits
+          <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">shopping_bag</span> Découvrir les produits
         </a>
       </div>
     } @else {
@@ -41,7 +41,7 @@
             <button class="remove-fav-btn"
                     (click)="removeFromFavorites(product.id)"
                     title="Retirer des favoris">
-              ❤️
+              <span class="material-symbols-rounded" style="font-size:18px;color:#ef4444;">favorite</span>
             </button>
 
             <div class="product-image-wrapper">
@@ -49,7 +49,7 @@
                    class="product-image" />
               <div class="product-overlay">
                 <a [routerLink]="['/products', product.id]"
-                   class="overlay-btn">👁️ Voir</a>
+                   class="overlay-btn"><span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">visibility</span> Voir</a>
               </div>
             </div>
 
@@ -72,9 +72,9 @@
                         (click)="addToCart(product)"
                         [class.added]="addedProductId === product.id">
                   @if (addedProductId !== product.id) {
-                    <span>🛒 Ajouter</span>
+                    <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">shopping_cart</span><span>Ajouter</span>
                   } @else {
-                    <span>✅ Ajouté !</span>
+                    <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">check_circle</span><span>Ajouté !</span>
                   }
                 </button>
                 <a [routerLink]="['/products', product.id]"

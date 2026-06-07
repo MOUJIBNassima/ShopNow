@@ -37,7 +37,7 @@
 
               <!-- Infos personnelles -->
               <div class="form-card">
-                <h3 class="card-title">👤 Informations personnelles</h3>
+                <h3 class="card-title"><span class="material-symbols-rounded" style="font-size:20px;vertical-align:middle;">person</span> Informations personnelles</h3>
 
                 <div class="form-row">
                   <div class="form-group">
@@ -88,7 +88,7 @@
 
               <!-- Adresse livraison -->
               <div class="form-card">
-                <h3 class="card-title">🚚 Adresse de livraison</h3>
+                <h3 class="card-title"><span class="material-symbols-rounded" style="font-size:20px;vertical-align:middle;">local_shipping</span> Adresse de livraison</h3>
 
                 <div class="form-group">
                   <label>Adresse *</label>
@@ -141,14 +141,14 @@
 
               <!-- Mode de paiement -->
               <div class="form-card">
-                <h3 class="card-title">💳 Mode de paiement</h3>
+                <h3 class="card-title"><span class="material-symbols-rounded" style="font-size:20px;vertical-align:middle;">credit_card</span> Mode de paiement</h3>
                 <div class="payment-options">
 
                   <label class="payment-option"
                          [class.selected]="paymentMethod.value === 'card'">
                     <input type="radio" formControlName="paymentMethod"
                            value="card" />
-                    <span class="payment-icon">💳</span>
+                    <span class="material-symbols-rounded payment-icon">credit_card</span>
                     <span>Carte bancaire</span>
                   </label>
 
@@ -156,7 +156,7 @@
                          [class.selected]="paymentMethod.value === 'paypal'">
                     <input type="radio" formControlName="paymentMethod"
                            value="paypal" />
-                    <span class="payment-icon">🅿️</span>
+                    <span class="material-symbols-rounded payment-icon">account_balance_wallet</span>
                     <span>PayPal</span>
                   </label>
 
@@ -164,7 +164,7 @@
                          [class.selected]="paymentMethod.value === 'cash'">
                     <input type="radio" formControlName="paymentMethod"
                            value="cash" />
-                    <span class="payment-icon">💵</span>
+                    <span class="material-symbols-rounded payment-icon">payments</span>
                     <span>Paiement à la livraison</span>
                   </label>
 
@@ -173,7 +173,7 @@
 
               <!-- Bouton commander -->
               <button type="submit" class="btn-order">
-                ✅ Confirmer la commande —
+                <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">check_circle</span> Confirmer la commande —
                 {{ getTotal().toFixed(2) }} DH
               </button>
 
@@ -217,7 +217,7 @@
                   @if (getShipping() > 0) {
                     <span>{{ getShipping().toFixed(2) }} DH</span>
                   } @else {
-                    <span class="free-label">Gratuite 🎉</span>
+                    <span class="free-label">Gratuite <span class="material-symbols-rounded" style="font-size:14px;vertical-align:middle;">celebration</span></span>
                   }
                 </div>
                 <div class="total-line total-final">
@@ -236,7 +236,7 @@
       <!-- ═══ ÉTAPE 2 : Confirmation ══════════════════════════════════ -->
       <div class="success-page">
         <div class="success-card">
-          <div class="success-animation">🎉</div>
+          <div class="success-animation"><span class="material-symbols-rounded" style="font-size:64px;color:#22c55e;">celebration</span></div>
           <h2>Commande confirmée !</h2>
           <p class="order-number">
             Numéro de commande :
@@ -248,24 +248,24 @@
           </p>
           <div class="success-details">
             <div class="success-detail">
-              <span>📦</span>
+              <span class="material-symbols-rounded">inventory_2</span>
               <span>Préparation en cours</span>
             </div>
             <div class="success-detail">
-              <span>🚚</span>
+              <span class="material-symbols-rounded">local_shipping</span>
               <span>Livraison estimée : 2-3 jours</span>
             </div>
             <div class="success-detail">
-              <span>✉️</span>
+              <span class="material-symbols-rounded">mail</span>
               <span>Email de confirmation envoyé</span>
             </div>
           </div>
           <div class="success-actions">
             <button class="btn-account" (click)="goToAccount()">
-              👤 Voir mes commandes
+              <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">person</span> Voir mes commandes
             </button>
             <button class="btn-home" (click)="goHome()">
-              🏠 Retour à l'accueil
+              <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">home</span> Retour à l'accueil
             </button>
           </div>
         </div>

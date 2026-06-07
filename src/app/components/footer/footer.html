@@ -1,22 +1,30 @@
 <!-- src/app/components/footer/footer.component.html -->
-
 <footer class="footer">
   <div class="footer-container">
 
     <!-- ─── Colonne 1 : Logo & description ──────────────────────────────── -->
-    <div class="footer-brand">
-      <a routerLink="/" class="footer-logo">
-        🛍️ Shop<span>Now</span>
-      </a>
+    <div class="footer-col footer-brand">
+      <div class="footer-logo">
+        <span class="material-symbols-rounded" style="font-size:28px;vertical-align:middle;">shopping_bag</span>
+        Shop<span>Now</span>
+      </div>
       <p class="footer-desc">
         Votre destination shopping moderne. Découvrez des milliers de produits
-        avec livraison rapide et service client exceptionnel.
+        de qualité livrés rapidement chez vous.
       </p>
       <div class="social-links">
-        <a href="#" class="social-btn">📘</a>
-        <a href="#" class="social-btn">📸</a>
-        <a href="#" class="social-btn">🐦</a>
-        <a href="#" class="social-btn">▶️</a>
+        <a href="#" class="social-btn" title="Facebook">
+          <span class="material-symbols-rounded">thumb_up</span>
+        </a>
+        <a href="#" class="social-btn" title="Instagram">
+          <span class="material-symbols-rounded">photo_camera</span>
+        </a>
+        <a href="#" class="social-btn" title="Twitter / X">
+          <span class="material-symbols-rounded">chat_bubble</span>
+        </a>
+        <a href="#" class="social-btn" title="YouTube">
+          <span class="material-symbols-rounded">play_circle</span>
+        </a>
       </div>
     </div>
 
@@ -27,8 +35,7 @@
         <li><a routerLink="/">Accueil</a></li>
         <li><a routerLink="/products">Produits</a></li>
         <li><a routerLink="/cart">Panier</a></li>
-        <li><a routerLink="/login">Connexion</a></li>
-        <li><a routerLink="/register">Inscription</a></li>
+        <li><a routerLink="/account">Mon Compte</a></li>
       </ul>
     </div>
 
@@ -37,10 +44,9 @@
       <h4>Catégories</h4>
       <ul>
         <li><a routerLink="/products">Électronique</a></li>
-        <li><a routerLink="/products">Audio</a></li>
+        <li><a routerLink="/products">Mode</a></li>
+        <li><a routerLink="/products">Maison</a></li>
         <li><a routerLink="/products">Sport</a></li>
-        <li><a routerLink="/products">Gaming</a></li>
-        <li><a routerLink="/products">Accessoires</a></li>
       </ul>
     </div>
 
@@ -48,10 +54,22 @@
     <div class="footer-col">
       <h4>Contact</h4>
       <ul class="contact-list">
-        <li>📍 Casablanca, Maroc</li>
-        <li>📞 +212 6 00 00 00 00</li>
-        <li>✉️ contact&#64;shopnow.ma</li>
-        <li>🕐 Lun-Ven : 9h-18h</li>
+        <li>
+          <span class="material-symbols-rounded contact-icon">location_on</span>
+          Casablanca, Maroc
+        </li>
+        <li>
+          <span class="material-symbols-rounded contact-icon">phone</span>
+          +212 6 00 00 00 00
+        </li>
+        <li>
+          <span class="material-symbols-rounded contact-icon">mail</span>
+          contact&#64;shopnow.ma
+        </li>
+        <li>
+          <span class="material-symbols-rounded contact-icon">schedule</span>
+          Lun-Ven : 9h-18h
+        </li>
       </ul>
     </div>
 
@@ -59,12 +77,21 @@
 
   <!-- ─── Barre du bas ───────────────────────────────────────────────────── -->
   <div class="footer-bottom">
-    <div class="footer-bottom-container">
+    <div class="footer-bottom-inner">
       <p>© {{ currentYear }} ShopNow. Tous droits réservés.</p>
       <div class="footer-badges">
-        <span class="badge">🔒 Paiement sécurisé</span>
-        <span class="badge">🚚 Livraison rapide</span>
-        <span class="badge">↩️ Retour facile</span>
+        <span class="badge">
+          <span class="material-symbols-rounded badge-icon">lock</span>
+          Paiement sécurisé
+        </span>
+        <span class="badge">
+          <span class="material-symbols-rounded badge-icon">local_shipping</span>
+          Livraison rapide
+        </span>
+        <span class="badge">
+          <span class="material-symbols-rounded badge-icon">keyboard_return</span>
+          Retour facile
+        </span>
       </div>
     </div>
   </div>

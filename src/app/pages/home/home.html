@@ -7,7 +7,10 @@
   <div class="hero-container">
 
     <div class="hero-content">
-      <span class="hero-badge">🔥 Nouveautés 2026</span>
+      <span class="hero-badge">
+        <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">local_fire_department</span>
+        Nouveautés 2026
+      </span>
       <h1 class="hero-title">
         Découvrez le
         <span class="gradient-text">Shopping</span>
@@ -19,7 +22,8 @@
       </p>
       <div class="hero-actions">
         <a routerLink="/products" class="btn-primary">
-          🛍️ Explorer les produits
+          <span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;">shopping_bag</span>
+          Explorer les produits
         </a>
         <a routerLink="/register" class="btn-secondary">
           Créer un compte
@@ -39,7 +43,9 @@
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
-          <span class="stat-number">4.9⭐</span>
+          <span class="stat-number">4.9
+            <span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;color:#f59e0b;">star</span>
+          </span>
           <span class="stat-label">Note moyenne</span>
         </div>
       </div>
@@ -49,20 +55,16 @@
     <div class="hero-visual">
       <div class="hero-blob"></div>
       <div class="hero-image-wrapper">
-        <img
-          src="image.png"
-          alt="Shopping ShopNow"
-          class="hero-image"
-        />
+        <img src="image.png" alt="Shopping ShopNow" class="hero-image" />
         <div class="float-card float-card-1">
-          <span>🚚</span>
+          <span class="material-symbols-rounded float-icon">local_shipping</span>
           <div>
             <strong>Livraison gratuite</strong>
             <small>Dès 500 DH d'achat</small>
           </div>
         </div>
         <div class="float-card float-card-2">
-          <span>⭐</span>
+          <span class="material-symbols-rounded float-icon">star</span>
           <div>
             <strong>Top Qualité</strong>
             <small>Garantie 2 ans</small>
@@ -83,55 +85,49 @@
       <h2>Nos <span class="gradient-text">Catégories</span></h2>
       <p>Trouvez exactement ce que vous cherchez</p>
     </div>
-    <section class="categories-section">
-  <div class="container">
-    <div class="section-header">
-      <h2>Nos <span class="gradient-text">Catégories</span></h2>
-      <p>Trouvez exactement ce que vous cherchez</p>
-    </div>
 
     <div class="categories-slider-wrapper">
       <button class="cat-arrow left" (click)="scrollCategories('left')" aria-label="Précédent">&#8249;</button>
 
       <div class="categories-track" #categoriesTrack>
         <a routerLink="/products" class="category-card" style="--cat-color: #6C63FF">
-          <span class="cat-icon">📱</span>
+          <span class="material-symbols-rounded cat-icon">smartphone</span>
           <span class="cat-name">Électronique</span>
         </a>
         <a routerLink="/products" class="category-card" style="--cat-color: #A855F7">
-          <span class="cat-icon">🎧</span>
+          <span class="material-symbols-rounded cat-icon">headphones</span>
           <span class="cat-name">Audio</span>
         </a>
         <a routerLink="/products" class="category-card" style="--cat-color: #8B5CF6">
-          <span class="cat-icon">👟</span>
+          <span class="material-symbols-rounded cat-icon">sports_soccer</span>
           <span class="cat-name">Sport</span>
         </a>
         <a routerLink="/products" class="category-card" style="--cat-color: #C084FC">
-          <span class="cat-icon">🎮</span>
+          <span class="material-symbols-rounded cat-icon">sports_esports</span>
           <span class="cat-name">Gaming</span>
         </a>
         <a routerLink="/products" class="category-card" style="--cat-color: #7C3AED">
-          <span class="cat-icon">⌚</span>
+          <span class="material-symbols-rounded cat-icon">watch</span>
           <span class="cat-name">Accessoires</span>
         </a>
         <a routerLink="/products" class="category-card" style="--cat-color: #9333EA">
-          <span class="cat-icon">🏠</span>
+          <span class="material-symbols-rounded cat-icon">home</span>
           <span class="cat-name">Maison</span>
         </a>
         <a routerLink="/products" class="category-card" style="--cat-color: #6C63FF">
-          <span class="cat-icon">💻</span>
+          <span class="material-symbols-rounded cat-icon">laptop</span>
           <span class="cat-name">Informatique</span>
         </a>
         <a routerLink="/products" class="category-card" style="--cat-color: #A855F7">
-          <span class="cat-icon">👔</span>
+          <span class="material-symbols-rounded cat-icon">checkroom</span>
           <span class="cat-name">Mode</span>
         </a>
         <a routerLink="/products" class="category-card" style="--cat-color: #8B5CF6">
-          <span class="cat-icon">💄</span>
+          <span class="material-symbols-rounded cat-icon">face</span>
           <span class="cat-name">Beauté</span>
         </a>
         <a routerLink="/products" class="category-card" style="--cat-color: #C084FC">
-          <span class="cat-icon">📷</span>
+          <span class="material-symbols-rounded cat-icon">photo_camera</span>
           <span class="cat-name">Photo</span>
         </a>
       </div>
@@ -139,8 +135,6 @@
       <button class="cat-arrow right" (click)="scrollCategories('right')" aria-label="Suivant">&#8250;</button>
     </div>
 
-  </div>
-</section>
   </div>
 </section>
 
@@ -155,22 +149,21 @@
       <p>Les meilleures ventes du moment</p>
     </div>
 
-    <!-- ✅ Nouvelle syntaxe @for -->
     <div class="products-grid">
       @for (product of featuredProducts; track product.id) {
         <div class="product-card">
 
-          <!-- ✅ Nouvelle syntaxe @if -->
           @if (product.badge) {
             <div class="product-badge">{{ product.badge }}</div>
           }
 
           <div class="product-image-wrapper">
-            <img [src]="product.image" [alt]="product.name"
-                 class="product-image" />
+            <img [src]="product.image" [alt]="product.name" class="product-image" />
             <div class="product-overlay">
-              <a [routerLink]="['/products', product.id]"
-                 class="overlay-btn">👁️ Voir</a>
+              <a [routerLink]="['/products', product.id]" class="overlay-btn">
+                <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">visibility</span>
+                Voir
+              </a>
             </div>
           </div>
 
@@ -182,7 +175,7 @@
             <div class="product-rating">
               <span class="stars">
                 @for (star of getStars(product.rating); track $index) {
-                  <span>⭐</span>
+                  <span class="material-symbols-rounded" style="font-size:14px;color:#f59e0b;">star</span>
                 }
               </span>
               <span class="rating-value">{{ product.rating }}</span>
@@ -205,9 +198,11 @@
                     (click)="addToCart(product)"
                     [class.added]="addedProductId === product.id">
               @if (addedProductId !== product.id) {
-                <span>🛒 Ajouter au panier</span>
+                <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">shopping_cart</span>
+                <span>Ajouter au panier</span>
               } @else {
-                <span>✅ Ajouté !</span>
+                <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">check_circle</span>
+                <span>Ajouté !</span>
               }
             </button>
           </div>
@@ -218,7 +213,8 @@
 
     <div class="section-footer">
       <a routerLink="/products" class="btn-primary">
-        Voir tous les produits →
+        Voir tous les produits
+        <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">arrow_forward</span>
       </a>
     </div>
 
@@ -232,22 +228,30 @@
   <div class="container">
     <div class="features-grid">
       <div class="feature-card">
-        <div class="feature-icon">🚚</div>
+        <div class="feature-icon">
+          <span class="material-symbols-rounded">local_shipping</span>
+        </div>
         <h3>Livraison Rapide</h3>
         <p>Livraison gratuite dès 500 DH. Recevez vos commandes en 24-48h.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🔒</div>
+        <div class="feature-icon">
+          <span class="material-symbols-rounded">lock</span>
+        </div>
         <h3>Paiement Sécurisé</h3>
         <p>Vos données bancaires sont protégées par un cryptage SSL.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">↩️</div>
+        <div class="feature-icon">
+          <span class="material-symbols-rounded">assignment_return</span>
+        </div>
         <h3>Retour Facile</h3>
         <p>30 jours pour changer d'avis. Retour gratuit sans questions.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">💬</div>
+        <div class="feature-icon">
+          <span class="material-symbols-rounded">support_agent</span>
+        </div>
         <h3>Support 24/7</h3>
         <p>Notre équipe est disponible à tout moment pour vous aider.</p>
       </div>

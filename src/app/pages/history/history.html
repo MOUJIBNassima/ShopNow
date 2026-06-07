@@ -5,7 +5,7 @@
 
     <div class="page-header">
       <div class="header-left">
-        <h1>🕐 <span class="gradient-text">Historique</span></h1>
+        <h1><span class="material-symbols-rounded" style="font-size:32px;vertical-align:middle;">history</span> <span class="gradient-text">Historique</span></h1>
         @if (historyItems.length > 0) {
           <span class="count-badge">
             {{ historyItems.length }} produit(s) consulté(s)
@@ -14,18 +14,18 @@
       </div>
       @if (historyItems.length > 0) {
         <button class="btn-clear-all" (click)="clearAll()">
-          🗑️ Effacer l'historique
+          <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">delete_sweep</span> Effacer l'historique
         </button>
       }
     </div>
 
     @if (historyItems.length === 0) {
       <div class="empty-state">
-        <span class="empty-icon">🕐</span>
+        <span class="material-symbols-rounded empty-icon">history</span>
         <h2>Aucun produit consulté</h2>
         <p>Les produits que vous consultez apparaîtront ici.</p>
         <a routerLink="/products" class="btn-primary">
-          🛍️ Explorer les produits
+          <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">shopping_bag</span> Explorer les produits
         </a>
       </div>
     } @else {
@@ -58,14 +58,20 @@
               <button class="fav-btn"
                       (click)="toggleFavorite(product)"
                       [class.active]="isFavorite(product.id)"
-                      title="Ajouter aux favoris">
-                {{ isFavorite(product.id) ? '❤️' : '🤍' }}
+                      [class.guest]="!isLoggedIn"
+                      [title]="isLoggedIn ? 'Ajouter aux favoris' : 'Connectez-vous pour ajouter aux favoris'">
+                <span class="material-symbols-rounded">{{ isFavorite(product.id) ? 'favorite' : 'favorite_border' }}</span>
+                @if (!isLoggedIn) {
+                  <span class="lock-hint">
+                    <span class="material-symbols-rounded" style="font-size:11px;">lock</span>
+                  </span>
+                }
               </button>
 
               <!-- Voir détail -->
               <a [routerLink]="['/products', product.id]"
                  class="view-btn">
-                👁️ Voir
+                <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">visibility</span> Voir
               </a>
 
               <!-- Ajouter au panier -->
@@ -73,9 +79,9 @@
                       (click)="addToCart(product)"
                       [class.added]="addedProductId === product.id">
                 @if (addedProductId !== product.id) {
-                  <span>🛒 Ajouter</span>
+                  <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">shopping_cart</span><span>Ajouter</span>
                 } @else {
-                  <span>✅ Ajouté</span>
+                  <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;">check_circle</span><span>Ajouté</span>
                 }
               </button>
 
@@ -83,7 +89,7 @@
               <button class="remove-btn"
                       (click)="removeItem(product.id)"
                       title="Supprimer">
-                ✕
+                <span class="material-symbols-rounded" style="font-size:18px;">close</span>
               </button>
             </div>
 
