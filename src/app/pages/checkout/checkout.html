@@ -174,7 +174,7 @@
               <!-- Bouton commander -->
               <button type="submit" class="btn-order">
                 ✅ Confirmer la commande —
-                {{ getTotal().toFixed(2) }}€
+                {{ getTotal().toFixed(2) }} DH
               </button>
 
             </form>
@@ -200,7 +200,7 @@
                       </span>
                     </div>
                     <span class="summary-item-price">
-                      {{ (item.product.price * item.quantity).toFixed(2) }}€
+                      {{ (item.product.price * item.quantity).toFixed(2) }} DH
                     </span>
                   </div>
                 }
@@ -210,19 +210,19 @@
               <div class="summary-totals">
                 <div class="total-line">
                   <span>Sous-total</span>
-                  <span>{{ getSubtotal().toFixed(2) }}€</span>
+                  <span>{{ getSubtotal().toFixed(2) }} DH</span>
                 </div>
                 <div class="total-line">
                   <span>Livraison</span>
                   @if (getShipping() > 0) {
-                    <span>{{ getShipping().toFixed(2) }}€</span>
+                    <span>{{ getShipping().toFixed(2) }} DH</span>
                   } @else {
                     <span class="free-label">Gratuite 🎉</span>
                   }
                 </div>
                 <div class="total-line total-final">
                   <span>Total</span>
-                  <span>{{ getTotal().toFixed(2) }}€</span>
+                  <span>{{ getTotal().toFixed(2) }} DH</span>
                 </div>
               </div>
             </div>

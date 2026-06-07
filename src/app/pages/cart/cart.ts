@@ -16,8 +16,8 @@ import { CartItem } from '../../models/cart-item.model';
 export class Cart implements OnInit {
 
   cartItems: CartItem[] = [];
-  shippingFee: number = 5.99;
-  freeShippingThreshold: number = 50;
+  shippingFee: number = 49;
+  freeShippingThreshold: number = 500;
 
   // Correction : constructor AVANT ngOnInit
   constructor(private cartService: CartService) { }

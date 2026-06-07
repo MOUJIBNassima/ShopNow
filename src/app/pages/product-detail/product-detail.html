@@ -58,12 +58,12 @@
             }
 
             <!-- ─── Bouton Favori (sur l'image) ───────────────────────── -->
-            <button class="fav-btn-overlay"
+            <!--<button class="fav-btn-overlay"
                     (click)="toggleFavorite()"
                     [class.active]="isFav"
                     [title]="isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'">
               {{ isFav ? '❤️' : '🤍' }}
-            </button>
+            </button>-->
 
           </div>
         </div>
@@ -95,12 +95,12 @@
 
           <!-- Prix -->
           <div class="price-section">
-            <span class="price-main">{{ product.price }}€</span>
+            <span class="price-main">{{ product.price }} DH</span>
             @if (product.oldPrice) {
               <div class="price-old-wrapper">
-                <span class="price-old">{{ product.oldPrice }}€</span>
+                <span class="price-old">{{ product.oldPrice }} DH</span>
                 <span class="price-saved">
-                  Économisez {{ product.oldPrice - product.price }}€
+                  Économisez {{ product.oldPrice - product.price }} DH
                 </span>
               </div>
             }
@@ -185,7 +185,7 @@
                 <img [src]="p.image" [alt]="p.name" class="similar-img" />
                 <div class="similar-info">
                   <h4>{{ p.name }}</h4>
-                  <span class="similar-price">{{ p.price }}€</span>
+                  <span class="similar-price">{{ p.price }} DH</span>
                   <a [routerLink]="['/products', p.id]" class="similar-link">
                     Voir →
                   </a>

@@ -58,9 +58,9 @@
               <h3 class="product-name">{{ product.name }}</h3>
 
               <div class="product-price">
-                <span class="price-current">{{ product.price }}€</span>
+                <span class="price-current">{{ product.price }} DH</span>
                 @if (product.oldPrice) {
-                  <span class="price-old">{{ product.oldPrice }}€</span>
+                  <span class="price-old">{{ product.oldPrice }} DH</span>
                   <span class="price-discount">
                     -{{ getDiscount(product.price, product.oldPrice) }}%
                   </span>

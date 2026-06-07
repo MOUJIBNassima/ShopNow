@@ -62,19 +62,19 @@
               <label>Min</label>
               <input type="number" [(ngModel)]="currentMinPrice" (ngModelChange)="onPriceChange()" [min]="0"
                 [max]="currentMaxPrice" class="price-input" />
-              <span>€</span>
+              <span> DH</span>
             </div>
             <span class="price-separator">—</span>
             <div class="price-input-group">
               <label>Max</label>
               <input type="number" [(ngModel)]="currentMaxPrice" (ngModelChange)="onPriceChange()"
                 [min]="currentMinPrice" [max]="maxPrice" class="price-input" />
-              <span>€</span>
+              <span> DH</span>
             </div>
           </div>
           <div class="price-display">
-            <span>{{ currentMinPrice }}€</span>
-            <span>{{ currentMaxPrice }}€</span>
+            <span>{{ currentMinPrice }} DH</span>
+            <span>{{ currentMaxPrice }} DH</span>
           </div>
         </div>
       </div>
@@ -194,9 +194,9 @@
         <p class="product-desc">{{ product.description }}</p>
 
         <div class="product-price">
-          <span class="price-current">{{ product.price }}€</span>
+          <span class="price-current">{{ product.price }} DH</span>
           @if (product.oldPrice) {
-          <span class="price-old">{{ product.oldPrice }}€</span>
+          <span class="price-old">{{ product.oldPrice }} DH</span>
           <span class="price-discount">
             -{{ getDiscount(product.price, product.oldPrice) }}%
           </span>

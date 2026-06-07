@@ -32,7 +32,7 @@
           <div class="shipping-text">
             <span *ngIf="getRemainingForFreeShipping() > 0">
               🚚 Plus que
-              <strong>{{ getRemainingForFreeShipping().toFixed(2) }}€</strong>
+              <strong>{{ getRemainingForFreeShipping().toFixed(2) }} DH</strong>
               pour la livraison gratuite !
             </span>
             <span *ngIf="getRemainingForFreeShipping() === 0"
@@ -64,7 +64,7 @@
             </span>
             <h3 class="item-name">{{ item.product.name }}</h3>
             <span class="item-unit-price">
-              Prix unitaire : {{ item.product.price }}€
+              Prix unitaire : {{ item.product.price }} DH
             </span>
           </div>
 
@@ -84,7 +84,7 @@
 
           <!-- Prix total ligne -->
           <div class="item-total">
-            {{ (item.product.price * item.quantity).toFixed(2) }}€
+            {{ (item.product.price * item.quantity).toFixed(2) }} DH
           </div>
 
           <!-- Supprimer -->
@@ -115,12 +115,12 @@
         <div class="summary-lines">
           <div class="summary-line">
             <span>Sous-total</span>
-            <span>{{ getSubtotal().toFixed(2) }}€</span>
+            <span>{{ getSubtotal().toFixed(2) }} DH</span>
           </div>
           <div class="summary-line">
             <span>Livraison</span>
             <span *ngIf="getShipping() > 0">
-              {{ getShipping().toFixed(2) }}€
+              {{ getShipping().toFixed(2) }} DH
             </span>
             <span *ngIf="getShipping() === 0" class="free-label">
               Gratuite 🎉
@@ -128,7 +128,7 @@
           </div>
           <div class="summary-line summary-total">
             <span>Total</span>
-            <span>{{ getTotal().toFixed(2) }}€</span>
+            <span>{{ getTotal().toFixed(2) }} DH</span>
           </div>
         </div>
 

@@ -24,8 +24,8 @@ export class Checkout implements OnInit {
   currentStep: number = 1;
   orderSuccess: boolean = false;
   orderNumber: string = '';
-  shippingFee: number = 5.99;
-  freeShippingThreshold: number = 50;
+  shippingFee: number = 49;
+  freeShippingThreshold: number = 500;
 
   constructor(
     private fb: FormBuilder,

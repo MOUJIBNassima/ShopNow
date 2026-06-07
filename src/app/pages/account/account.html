@@ -164,7 +164,7 @@
                       <span class="order-items-count">
                         {{ order.items.length }} article(s)
                       </span>
-                      <span class="order-total">{{ order.total.toFixed(2) }}€</span>
+                      <span class="order-total">{{ order.total.toFixed(2) }} DH</span>
                       <span class="order-status" [class]="getStatusClass(order.status)">
                         {{ getStatusIcon(order.status) }} {{ order.status }}
                       </span>
@@ -190,7 +190,7 @@
                               <span class="order-item-qty">Quantité : {{ item.quantity }}</span>
                             </div>
                             <span class="order-item-price">
-                              {{ item.total.toFixed(2) }}€
+                              {{ item.total.toFixed(2) }} DH
                             </span>
                           </div>
                         }
@@ -200,15 +200,15 @@
                       <div class="order-totals">
                         <div class="total-row">
                           <span>Sous-total</span>
-                          <span>{{ order.subtotal.toFixed(2) }}€</span>
+                          <span>{{ order.subtotal.toFixed(2) }} DH</span>
                         </div>
                         <div class="total-row">
                           <span>Livraison</span>
-                          <span>{{ order.shipping === 0 ? 'Gratuite' : order.shipping.toFixed(2) + '€' }}</span>
+                          <span>{{ order.shipping === 0 ? 'Gratuite' : order.shipping.toFixed(2) + ' DH' }}</span>
                         </div>
                         <div class="total-row total-final">
                           <span>Total payé</span>
-                          <span>{{ order.total.toFixed(2) }}€</span>
+                          <span>{{ order.total.toFixed(2) }} DH</span>
                         </div>
                       </div>
 
