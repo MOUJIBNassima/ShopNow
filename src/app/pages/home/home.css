@@ -198,10 +198,18 @@
   background: white;
 }
 
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+.categories-slider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.categories-track {
+  display: flex;
   gap: 1.2rem;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  flex: 1;
 }
 
 .category-card {
@@ -215,6 +223,7 @@
   text-decoration: none;
   transition: all 0.3s ease;
   border: 2px solid transparent;
+  flex: 0 0 130px;
 }
 
 .category-card:hover {
@@ -246,6 +255,32 @@
   font-size: 0.85rem;
   font-weight: 600;
   color: #4a4a6a;
+  white-space: nowrap;
+}
+
+.cat-arrow {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #e5e7eb;
+  background: white;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #6C63FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.cat-arrow:hover {
+  background: #6C63FF;
+  border-color: #6C63FF;
+  color: white;
+  box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3);
 }
 
 /* ─── Produits Populaires ─────────────────────────────────────────────────── */
