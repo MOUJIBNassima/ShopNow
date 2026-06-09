@@ -38,8 +38,8 @@
       <ng-container *ngIf="currentUser; else guestLinks">
         <li class="mobile-only">
           <span class="user-greeting-mobile">
-            <span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;">waving_hand</span>
-            {{ currentUser.firstName }}
+            <!--<span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;">waving_hand</span>-->
+            Hi, {{ currentUser.firstName }}
           </span>
         </li>
         <li class="mobile-only">
@@ -85,7 +85,7 @@
       <a routerLink="/favorites" class="fav-nav-btn">
         <span class="material-symbols-rounded">favorite</span>
         @if (favCount > 0) {
-          <span class="cart-badge">{{ favCount }}</span>
+        <span class="cart-badge">{{ favCount }}</span>
         }
       </a>
 
